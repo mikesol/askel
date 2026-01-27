@@ -166,6 +166,12 @@
       pointer-events: none;
     }
 
+    /* Quick fade for section <-> section */
+    .view.section.fade-mode {
+      transform: none !important;
+      transition: opacity 0.3s ease !important;
+    }
+
     /* Landing content */
     .landing-content {
       display: flex;
@@ -465,22 +471,16 @@
     const ctx = canvas.getContext('2d');
     let width, height;
 
-    // Stair path configuration
-    const stairConfig = {
+    // Generative stair configuration
+    const baseConfig = {
       stepWidth: 60,
       stepHeight: 50,
       steps: 10,
-      lineSpeed: 2,
-      lineLength: 150,
       strokeWidth: 2
     };
 
-    // Single line state
-    let line = {
-      head: 0,      // Head position along path
-      tail: 0,      // Tail position (starts same as head, grows)
-      phase: 'growing'  // 'growing', 'moving', 'shrinking'
-    };
+    // Active lines with their own parameters
+    let lines = [];
 
     function resize() {
       width = canvas.width = window.innerWidth;
@@ -500,9 +500,9 @@
       const startY = height * 0.75;
 
       // Calculate step dimensions based on screen
-      const stepW = Math.min(stairConfig.stepWidth, width * 0.06);
-      const stepH = Math.min(stairConfig.stepHeight, height * 0.08);
-      const steps = stairConfig.steps;
+      const stepW = Math.min(baseConfig.stepWidth, width * 0.06);
+      const stepH = Math.min(baseConfig.stepHeight, height * 0.08);
+      const steps = baseConfig.steps;
 
       // Build path going up-left (ascending stairs)
       let x = startX;
@@ -527,8 +527,23 @@
         totalPathLength += Math.sqrt(dx * dx + dy * dy);
       }
 
-      // Reset line state
-      line = { head: 0, tail: 0, phase: 'growing' };
+      // Start with one line
+      spawnLine();
+    }
+
+    // Random range helper
+    function rand(min, max) {
+      return min + Math.random() * (max - min);
+    }
+
+    // Spawn a new line with random parameters
+    function spawnLine() {
+      lines.push({
+        progress: 0,
+        duration: rand(5, 10),        // 5-10 seconds per cycle
+        lineLength: rand(80, 200),    // varying length
+        opacity: rand(0.5, 0.8)       // varying opacity
+      });
     }
 
     // Get point along the stair path at a given distance (clamped, not wrapped)
@@ -554,21 +569,20 @@
       return stairPath[stairPath.length - 1];
     }
 
-    function drawLine() {
-      if (line.head <= line.tail) return;
+    function drawLine(line, head, tail) {
+      if (head <= tail) return;
 
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
-      ctx.lineWidth = stairConfig.strokeWidth;
+      ctx.strokeStyle = `rgba(255, 255, 255, ${line.opacity})`;
+      ctx.lineWidth = baseConfig.strokeWidth;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
 
-      // Draw from tail to head
       const segments = 40;
-      const lineLen = line.head - line.tail;
+      const lineLen = head - tail;
 
       for (let i = 0; i <= segments; i++) {
-        const d = line.tail + (i / segments) * lineLen;
+        const d = tail + (i / segments) * lineLen;
         const point = getPointAtDistance(d);
 
         if (i === 0) {
@@ -588,9 +602,6 @@
         : 1 - Math.pow(-2 * t + 2, 3) / 2;
     }
 
-    // Animation state
-    let animProgress = 0;  // 0 to 1 for full cycle
-    const cycleDuration = 7;  // seconds for full cycle
     let lastTime = null;
 
     function animate(currentTime) {
@@ -600,28 +611,39 @@
 
       ctx.clearRect(0, 0, width, height);
 
-      // Update progress
-      animProgress += deltaTime / cycleDuration;
-      if (animProgress >= 1) {
-        animProgress = 0;
+      // Update and draw each line
+      lines = lines.filter(line => {
+        line.progress += deltaTime / line.duration;
+
+        if (line.progress >= 1) {
+          // Line completed - maybe spawn a new one
+          if (lines.length < 3 && Math.random() > 0.3) {
+            setTimeout(spawnLine, rand(500, 2000));
+          }
+          return false;
+        }
+
+        const easedProgress = easeInOut(line.progress);
+        const totalTravel = totalPathLength + line.lineLength;
+
+        const headRaw = easedProgress * totalTravel;
+        const head = Math.min(headRaw, totalPathLength);
+        const tail = Math.max(headRaw - line.lineLength, 0);
+
+        drawLine(line, head, tail);
+        return true;
+      });
+
+      // Ensure at least one line is always running
+      if (lines.length === 0) {
+        spawnLine();
       }
 
-      // Apply easing to get actual position
-      const easedProgress = easeInOut(animProgress);
+      // Occasionally spawn additional lines (max 3)
+      if (lines.length < 3 && Math.random() < 0.002) {
+        spawnLine();
+      }
 
-      // Calculate head and tail positions
-      const maxLen = stairConfig.lineLength;
-      const totalTravel = totalPathLength + maxLen;
-
-      // Head position (starts at 0, ends at totalPathLength)
-      const headRaw = easedProgress * totalTravel;
-      line.head = Math.min(headRaw, totalPathLength);
-
-      // Tail position (starts at -maxLen, ends at totalPathLength)
-      const tailRaw = headRaw - maxLen;
-      line.tail = Math.max(tailRaw, 0);
-
-      drawLine();
       requestAnimationFrame(animate);
     }
 
@@ -634,18 +656,37 @@
     let currentSection = null;
 
     function goToSection(sectionId) {
-      // Hide all sections first
-      sections.forEach(s => s.classList.remove('active'));
-      landing.classList.add('hidden');
+      const targetSection = document.getElementById(sectionId);
+      const fromLanding = currentSection === null;
 
-      // Show target section
-      document.getElementById(sectionId).classList.add('active');
+      if (fromLanding) {
+        // Landing → Section: slide transition
+        sections.forEach(s => s.classList.remove('fade-mode'));
+        landing.classList.add('hidden');
+        targetSection.classList.add('active');
+      } else {
+        // Section → Section: quick fade
+        const oldSection = document.getElementById(currentSection);
+
+        // Enable fade mode for both
+        oldSection.classList.add('fade-mode');
+        targetSection.classList.add('fade-mode');
+
+        oldSection.classList.remove('active');
+        targetSection.classList.add('active');
+      }
+
       document.body.classList.add('in-section');
       currentSection = sectionId;
     }
 
     function goToLanding() {
-      sections.forEach(s => s.classList.remove('active'));
+      if (currentSection) {
+        const oldSection = document.getElementById(currentSection);
+        // Remove fade mode so it slides out
+        oldSection.classList.remove('fade-mode', 'active');
+      }
+
       landing.classList.remove('hidden');
       document.body.classList.remove('in-section');
       currentSection = null;
