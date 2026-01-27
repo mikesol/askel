@@ -33,12 +33,64 @@
       z-index: 0;
     }
 
+    /* Top navigation */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      pointer-events: none;
+    }
+
+    .nav-left, .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      pointer-events: auto;
+    }
+
+    .home-btn {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      opacity: 0.9;
+      transition: opacity 0.3s ease;
+    }
+
+    .home-btn:hover {
+      opacity: 1;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      padding: 0.5rem 0.75rem;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.3s ease, opacity 0.3s ease;
+    }
+
+    .nav-btn:hover {
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
     /* Language toggle */
     .lang-toggle {
-      position: fixed;
-      top: 1.5rem;
-      right: 1.5rem;
-      z-index: 100;
       display: flex;
       align-items: center;
       gap: 0.25rem;
@@ -70,36 +122,6 @@
     .lang-divider {
       color: #fff;
       opacity: 0.3;
-    }
-
-    /* Back button */
-    .back-btn {
-      position: fixed;
-      top: 1.5rem;
-      left: 1.5rem;
-      z-index: 100;
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 4px;
-      padding: 0.5rem 0.75rem;
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease, border-color 0.3s ease;
-    }
-
-    .back-btn:hover {
-      border-color: rgba(255, 255, 255, 0.5);
-    }
-
-    body.in-section .back-btn {
-      opacity: 1;
-      pointer-events: auto;
     }
 
     /* Views container */
@@ -231,21 +253,81 @@
       border-color: rgba(255, 255, 255, 0.5);
     }
 
+    /* About section */
+    .about-section {
+      max-width: 700px;
+    }
+
+    .founders-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .founder {
+      padding: 0;
+    }
+
+    .founder-name {
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 0.25rem;
+    }
+
+    .founder-role {
+      font-size: 0.85rem;
+      opacity: 0.5;
+      font-weight: 300;
+    }
+
+    /* Cases section */
+    .cases-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .case-item {
+      padding: 1.25rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      transition: border-color 0.3s ease;
+    }
+
+    .case-item:not(.empty):hover {
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .case-item.empty {
+      opacity: 0.3;
+      border-style: dashed;
+    }
+
+    .case-name {
+      font-size: 1.1rem;
+      font-weight: 400;
+    }
+
     /* Mobile */
     @media (max-width: 768px) {
-      .lang-toggle,
-      .back-btn {
-        top: 1rem;
+      .top-nav {
+        padding: 1rem;
+      }
+
+      .home-btn {
+        font-size: 0.85rem;
+      }
+
+      .nav-btn,
+      .lang-toggle {
         padding: 0.4rem 0.6rem;
         font-size: 0.6rem;
       }
 
-      .lang-toggle {
-        right: 1rem;
-      }
-
-      .back-btn {
-        left: 1rem;
+      .nav-right {
+        gap: 0.5rem;
       }
 
       .view.landing,
@@ -269,19 +351,31 @@
         padding: 0.85rem 1.5rem;
         font-size: 0.75rem;
       }
+
+      .founders-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
   <canvas id="stair-canvas"></canvas>
 
-  <button class="lang-toggle" id="lang-toggle">
-    <span class="lang-option active" data-lang="fi">FI</span>
-    <span class="lang-divider">/</span>
-    <span class="lang-option" data-lang="en">EN</span>
-  </button>
-
-  <button class="back-btn" id="back-btn" data-i18n="back">Takaisin</button>
+  <nav class="top-nav">
+    <div class="nav-left">
+      <button class="home-btn" id="home-btn">Askel</button>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn" data-section="about" data-i18n="nav.about">Meistä</button>
+      <button class="nav-btn" data-section="cases" data-i18n="nav.cases">Caset</button>
+      <button class="lang-toggle" id="lang-toggle">
+        <span class="lang-option active" data-lang="fi">FI</span>
+        <span class="lang-divider">/</span>
+        <span class="lang-option" data-lang="en">EN</span>
+      </button>
+    </div>
+  </nav>
 
   <div class="views">
     <!-- Landing -->
@@ -321,6 +415,46 @@
         <h1 data-i18n="operators.title">Rakenna kanssamme</h1>
         <p data-i18n="operators.desc">Etsimme osaavia johtajia portfolioyhtiöihimme. Tarjoamme mahdollisuuden todelliseen omistajuuteen ja merkitykselliseen työhön.</p>
         <a href="mailto:hello@askel.fi" class="cta" data-i18n="cta">Ota yhteyttä</a>
+      </div>
+    </div>
+
+    <!-- About -->
+    <div class="view section" id="about">
+      <div class="section-content about-section">
+        <h1 data-i18n="about.title">Meistä</h1>
+        <p data-i18n="about.intro">Operoijia ja ohjelmisto-osaajia. Ostamme pienyrityksiä ja vapautamme arvoa digitalisaatiolla, jonka muut jättävät huomaamatta.</p>
+        <div class="founders-grid">
+          <div class="founder">
+            <h3 class="founder-name">Vária Wahlroos-Kaitila</h3>
+            <p class="founder-role">ceo | moocy | apperior</p>
+          </div>
+          <div class="founder">
+            <h3 class="founder-name">Niklas Slotte</h3>
+            <p class="founder-role">finance | sayduck | whyprint</p>
+          </div>
+          <div class="founder">
+            <h3 class="founder-name">Mikael Ylinen</h3>
+            <p class="founder-role">ops | kaffa | whyprint</p>
+          </div>
+          <div class="founder">
+            <h3 class="founder-name">Mike Solomon</h3>
+            <p class="founder-role">tech | meeshkan | purescript</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cases -->
+    <div class="view section" id="cases">
+      <div class="section-content">
+        <h1 data-i18n="cases.title">Caset</h1>
+        <div class="cases-list">
+          <div class="case-item">
+            <span class="case-name">Melers Oy</span>
+          </div>
+          <div class="case-item empty"></div>
+          <div class="case-item empty"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -495,14 +629,19 @@
     const landing = document.getElementById('landing');
     const sections = document.querySelectorAll('.view.section');
     const navItems = document.querySelectorAll('.nav-item');
-    const backBtn = document.getElementById('back-btn');
+    const topNavBtns = document.querySelectorAll('.nav-btn[data-section]');
+    const homeBtn = document.getElementById('home-btn');
     let currentSection = null;
 
     function goToSection(sectionId) {
-      currentSection = sectionId;
+      // Hide all sections first
+      sections.forEach(s => s.classList.remove('active'));
       landing.classList.add('hidden');
+
+      // Show target section
       document.getElementById(sectionId).classList.add('active');
       document.body.classList.add('in-section');
+      currentSection = sectionId;
     }
 
     function goToLanding() {
@@ -512,11 +651,18 @@
       currentSection = null;
     }
 
+    // Landing nav items (Investors, Businesses, Operators)
     navItems.forEach(item => {
       item.addEventListener('click', () => goToSection(item.dataset.section));
     });
 
-    backBtn.addEventListener('click', goToLanding);
+    // Top nav items (About, Cases)
+    topNavBtns.forEach(btn => {
+      btn.addEventListener('click', () => goToSection(btn.dataset.section));
+    });
+
+    // Home button
+    homeBtn.addEventListener('click', goToLanding);
 
     // Keyboard navigation
     window.addEventListener('keydown', (e) => {
@@ -528,31 +674,39 @@
     // ============ TRANSLATIONS ============
     const translations = {
       fi: {
-        'back': 'Takaisin',
         'tagline': 'Uusi pääomasijoitusyhtiö',
         'nav.investors': 'Sijoittajille',
         'nav.businesses': 'Yrityksille',
         'nav.operators': 'Operaattoreille',
+        'nav.about': 'Meistä',
+        'nav.cases': 'Caset',
         'investors.title': 'Pitkäjänteistä pääomaa',
         'investors.desc': 'Rakennamme kestävää arvoa yhdessä. Tarjoamme institutionaalisille sijoittajille ja perhetoimistoille mahdollisuuden osallistua pitkäaikaiseen arvonluontiin.',
         'businesses.title': 'Kumppani kasvuun',
         'businesses.desc': 'Autamme yrityksiä ottamaan seuraavan askeleen. Tuomme mukaan pääomaa, osaamista ja pitkäjänteisen näkemyksen liiketoiminnan kehittämiseen.',
         'operators.title': 'Rakenna kanssamme',
         'operators.desc': 'Etsimme osaavia johtajia portfolioyhtiöihimme. Tarjoamme mahdollisuuden todelliseen omistajuuteen ja merkitykselliseen työhön.',
+        'about.title': 'Meistä',
+        'about.intro': 'Operoijia ja ohjelmisto-osaajia. Ostamme pienyrityksiä ja vapautamme arvoa digitalisaatiolla, jonka muut jättävät huomaamatta.',
+        'cases.title': 'Caset',
         'cta': 'Ota yhteyttä'
       },
       en: {
-        'back': 'Back',
         'tagline': 'A new private equity firm',
         'nav.investors': 'For Investors',
         'nav.businesses': 'For Businesses',
         'nav.operators': 'For Operators',
+        'nav.about': 'About',
+        'nav.cases': 'Cases',
         'investors.title': 'Patient capital',
         'investors.desc': 'We build lasting value together. We offer institutional investors and family offices the opportunity to participate in long-term value creation.',
         'businesses.title': 'Partner for growth',
         'businesses.desc': 'We help companies take the next step. We bring capital, expertise, and a long-term vision for business development.',
         'operators.title': 'Build with us',
         'operators.desc': 'We seek talented leaders for our portfolio companies. We offer the opportunity for true ownership and meaningful work.',
+        'about.title': 'About Us',
+        'about.intro': 'Operators and software people. We acquire small businesses and unlock value through digitalization that others overlook.',
+        'cases.title': 'Cases',
         'cta': 'Get in touch'
       }
     };
