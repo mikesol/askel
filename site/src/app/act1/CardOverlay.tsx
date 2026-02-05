@@ -42,8 +42,8 @@ function SearchOverlay() {
       transition={{ duration: 0.6, delay: 0.3 }}
     >
       <p className="text-[15px] text-white/80 leading-relaxed font-light">
-        We analyzed dozens of businesses before making a move. Most died at the
-        first filter.
+        For our first acquisition, we analyzed dozens of businesses using
+        agencies, webscrapers, and old-fashioned networking.
       </p>
     </motion.div>
   );
