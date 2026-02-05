@@ -1,11 +1,11 @@
 import { CardData } from "./types";
 
 export const CARDS: CardData[] = [
-  // Segment 0: 4 cards
-  { id: 0, segment: 0, segmentLabel: "Act 1", hasVerticalReveal: false },
-  { id: 1, segment: 0, segmentLabel: "Act 1", hasVerticalReveal: false },
-  { id: 2, segment: 0, segmentLabel: "Act 1", hasVerticalReveal: true },
-  { id: 3, segment: 0, segmentLabel: "Act 1", hasVerticalReveal: false },
+  // Segment 0: Act 1 — The Funnel
+  { id: 0, segment: 0, segmentLabel: "Act 1", hasVerticalReveal: false, cardType: "act1-search" },
+  { id: 1, segment: 0, segmentLabel: "Act 1", hasVerticalReveal: false, cardType: "act1-criteria" },
+  { id: 2, segment: 0, segmentLabel: "Act 1", hasVerticalReveal: false, cardType: "act1-kill" },
+  { id: 3, segment: 0, segmentLabel: "Act 1", hasVerticalReveal: false, cardType: "act1-payoff" },
   // Segment 1: 3 cards
   { id: 4, segment: 1, segmentLabel: "Act 2", hasVerticalReveal: false },
   { id: 5, segment: 1, segmentLabel: "Act 2", hasVerticalReveal: true },

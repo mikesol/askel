@@ -6,6 +6,7 @@ export interface CardData {
   segment: number;
   segmentLabel: string;
   hasVerticalReveal: boolean;
+  cardType?: string;
 }
 
 export interface DeckConfig {
