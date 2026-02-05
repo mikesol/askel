@@ -20,10 +20,10 @@ export type FilterKey =
   | "domesticMarket"
   | "stableRevenue"
   // Kill question filters (stage 2 — card 1.3)
-  | "noLiabilities"
-  | "ownerWillStay"
-  | "transferableContracts"
-  | "noRegulatoryRisk";
+  | "exitPath"
+  | "capitalGain"
+  | "techUpside"
+  | "timeCommitment";
 
 export const CRITERIA_FILTERS: FilterKey[] = [
   "revenue500k",
@@ -36,10 +36,10 @@ export const CRITERIA_FILTERS: FilterKey[] = [
 ];
 
 export const KILL_FILTERS: FilterKey[] = [
-  "noLiabilities",
-  "ownerWillStay",
-  "transferableContracts",
-  "noRegulatoryRisk",
+  "exitPath",
+  "capitalGain",
+  "techUpside",
+  "timeCommitment",
 ];
 
 export const FILTER_LABELS: Record<FilterKey, string> = {
@@ -50,10 +50,10 @@ export const FILTER_LABELS: Record<FilterKey, string> = {
   scalable: "Scalable",
   domesticMarket: "Domestic market",
   stableRevenue: "Stable revenue",
-  noLiabilities: "No hidden liabilities",
-  ownerWillStay: "Owner stays on",
-  transferableContracts: "Contracts transfer",
-  noRegulatoryRisk: "No regulatory risk",
+  exitPath: "Exit path",
+  capitalGain: "€100k+ gain",
+  techUpside: "Tech upside",
+  timeCommitment: "5h/week max",
 };
 
 export interface Prospect {
