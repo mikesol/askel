@@ -162,7 +162,7 @@ export function Card({
       {/* Swipe hint on first card */}
       {showSwipeHint && (
         <motion.div
-          className="absolute bottom-10 flex items-center gap-2 text-white/70"
+          className={`absolute flex items-center gap-2 text-white/70 ${isAct1 ? "bottom-[38%]" : "bottom-10"}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: [0.15, 0.8, 0.15] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}

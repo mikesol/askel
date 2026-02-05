@@ -82,12 +82,12 @@ export function FinlandMap({
 }: FinlandMapProps) {
   return (
     <motion.div
-      className="absolute inset-0 z-10 flex items-center justify-center"
-      style={{ opacity: mapOpacity }}
+      className="absolute inset-x-0 top-0 z-10 flex items-start justify-center"
+      style={{ height: "75%", opacity: mapOpacity }}
     >
       <svg
         viewBox={`0 0 ${SVG_WIDTH} ${SVG_HEIGHT}`}
-        className="w-full h-full max-w-[90vw] max-h-[70vh]"
+        className="w-full h-full"
         preserveAspectRatio="xMidYMid meet"
       >
         <defs>

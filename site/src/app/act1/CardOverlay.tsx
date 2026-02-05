@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { CRITERIA_FILTERS, KILL_FILTERS } from "./prospectData";
 import { FilterPanel } from "./FilterPanel";
-import { DotCounter } from "./DotCounter";
 
 interface CardOverlayProps {
   cardType: string;
@@ -17,14 +16,14 @@ export function CardOverlay({ cardType }: CardOverlayProps) {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.95) 85%)",
+            "linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.6) 70%, rgba(0,0,0,0.95) 85%)",
         }}
       />
 
       {/* Content panel */}
       <div
         className="relative z-10 px-6 pointer-events-auto"
-        style={{ paddingBottom: "max(24px, env(safe-area-inset-bottom))" }}
+        style={{ paddingBottom: "max(32px, env(safe-area-inset-bottom))" }}
       >
         {cardType === "act1-search" && <SearchOverlay />}
         {cardType === "act1-criteria" && <CriteriaOverlay />}
@@ -41,13 +40,11 @@ function SearchOverlay() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.3 }}
-      className="space-y-4"
     >
       <p className="text-[15px] text-white/80 leading-relaxed font-light">
         We analyzed dozens of businesses before making a move. Most died at the
         first filter.
       </p>
-      <DotCounter />
     </motion.div>
   );
 }
@@ -65,7 +62,6 @@ function CriteriaOverlay() {
         scruffier, the better.
       </p>
       <FilterPanel filters={CRITERIA_FILTERS} />
-      <DotCounter />
     </motion.div>
   );
 }
@@ -83,7 +79,6 @@ function KillOverlay() {
         two.
       </p>
       <FilterPanel filters={KILL_FILTERS} />
-      <DotCounter />
     </motion.div>
   );
 }
