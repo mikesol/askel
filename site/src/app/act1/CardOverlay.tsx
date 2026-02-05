@@ -76,7 +76,7 @@ function KillOverlay() {
     >
       <p className="text-[15px] text-white/80 leading-relaxed font-light">
         Our most important criteria are the &ldquo;kill questions&rdquo; that we
-        ask before any deal is presented to the whole team.
+        ask before we engage with a seller.
       </p>
       <FilterPanel filters={KILL_FILTERS} />
     </motion.div>
