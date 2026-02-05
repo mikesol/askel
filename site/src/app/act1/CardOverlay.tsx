@@ -58,8 +58,8 @@ function CriteriaOverlay() {
       className="space-y-4"
     >
       <p className="text-[15px] text-white/80 leading-relaxed font-light">
-        €500k revenue. 20% margins. Service industry. Owner-operated. The
-        scruffier, the better.
+        Here are some elements from our search criteria. Tap to see the
+        outcomes.
       </p>
       <FilterPanel filters={CRITERIA_FILTERS} />
     </motion.div>
