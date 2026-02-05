@@ -152,19 +152,14 @@ function PayoffOverlay() {
       <p className="text-[15px] text-white/80 leading-relaxed font-light">
         After months of filtering, one business made it through.
       </p>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
-        className="space-y-1"
-      >
+      <div className="space-y-1">
         <p className="text-[22px] text-white font-medium tracking-wide">
           Melers
         </p>
         <p className="text-[13px] text-white/40 font-light">
           A laundry business in Turku.
         </p>
-      </motion.div>
+      </div>
     </div>
   );
 }
