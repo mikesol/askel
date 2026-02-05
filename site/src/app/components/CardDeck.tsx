@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useMotionValue, useTransform, animate } from "framer-motion";
 import { Card } from "./Card";
+import { ProgressBar } from "./ProgressBar";
 import { CARDS } from "../data";
 import { DeckConfig, SpringPreset } from "../types";
 
@@ -22,6 +23,12 @@ export function CardDeck() {
     showProgress: true,
   });
 
+  const currentIndexRef = useRef(currentIndex);
+  useEffect(() => {
+    currentIndexRef.current = currentIndex;
+    dragProgress.set(currentIndex);
+  }, [currentIndex]);
+
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 0, 200], [-5, 0, 5]);
   const scale = useTransform(x, [-200, 0, 200], [0.95, 1, 0.95]);
@@ -30,12 +37,26 @@ export function CardDeck() {
   const behindScale = useTransform(x, [-200, 0, 200], [1, 0.95, 1]);
   const behindOpacity = useTransform(x, [-200, 0, 200], [1, 0.7, 1]);
 
+  // Progress: fractional position interpolated during drag
+  const dragProgress = useMotionValue(currentIndex);
+
+  // Subscribe x motion value to update dragProgress in real time
+  useEffect(() => {
+    const unsubscribe = x.on("change", (latestX) => {
+      const vw = typeof window !== "undefined" ? window.innerWidth : 400;
+      // Normalize: dragging left (negative x) means going forward
+      const fraction = -latestX / (vw * 1.5);
+      dragProgress.set(currentIndexRef.current + fraction);
+    });
+    return unsubscribe;
+  }, [x, dragProgress]);
+
   const handleDragEnd = useCallback(
     (_event: MouseEvent | TouchEvent | PointerEvent, info: { offset: { x: number; y: number }; velocity: { x: number; y: number } }) => {
       const threshold = window.innerWidth * SWIPE_THRESHOLD_RATIO;
       const spring = SPRING_CONFIGS[config.spring];
 
-      // Swipe right = next card (positive offset means finger moved right)
+      // Swipe left on screen = next card
       if (info.offset.x < -threshold && currentIndex < CARDS.length - 1) {
         animate(x, -window.innerWidth * 1.5, {
           type: "spring",
@@ -46,7 +67,7 @@ export function CardDeck() {
           },
         });
       }
-      // Swipe left = previous card
+      // Swipe right on screen = previous card
       else if (info.offset.x > threshold && currentIndex > 0) {
         animate(x, window.innerWidth * 1.5, {
           type: "spring",
@@ -67,6 +88,15 @@ export function CardDeck() {
 
   return (
     <div className="relative h-full w-full">
+      {/* Progress bar */}
+      {config.showProgress && (
+        <ProgressBar
+          currentIndex={currentIndex}
+          totalCards={CARDS.length}
+          dragProgress={dragProgress}
+        />
+      )}
+
       {/* Behind card (next) */}
       {currentIndex < CARDS.length - 1 && (
         <Card
@@ -101,5 +131,5 @@ export function CardDeck() {
   );
 }
 
-// Export for DevPanel wiring
-export type { DeckConfig };
+export { type DeckConfig };
+export { SPRING_CONFIGS };
