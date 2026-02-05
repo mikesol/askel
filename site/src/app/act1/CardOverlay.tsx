@@ -77,16 +77,12 @@ function WhyButton({ onClick }: { onClick: () => void }) {
 
 function SearchOverlay() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.3 }}
-    >
+    <div>
       <p className="text-[15px] text-white/80 leading-relaxed font-light">
         For our first acquisition, we analyzed dozens of businesses using
         agencies, webscrapers, and old-fashioned networking.
       </p>
-    </motion.div>
+    </div>
   );
 }
 
@@ -104,18 +100,13 @@ function CriteriaOverlay() {
         <WhyButton onClick={() => setModalOpen(true)} />
       )}
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="space-y-4"
-      >
+      <div className="space-y-4">
         <p className="text-[15px] text-white/80 leading-relaxed font-light">
           Below are several criteria from our search list. Tap them to see the
           outcomes.
         </p>
         <FilterPanel filters={CRITERIA_FILTERS} />
-      </motion.div>
+      </div>
 
       <CriteriaDetailModal
         open={modalOpen}
@@ -138,18 +129,13 @@ function KillOverlay() {
         <WhyButton onClick={() => setModalOpen(true)} />
       )}
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="space-y-4"
-      >
+      <div className="space-y-4">
         <p className="text-[15px] text-white/80 leading-relaxed font-light">
           Our most important criteria are the &ldquo;kill questions&rdquo; that
           we ask before we engage with a seller.
         </p>
         <FilterPanel filters={KILL_FILTERS} />
-      </motion.div>
+      </div>
 
       <KillDetailModal
         open={modalOpen}
@@ -162,12 +148,7 @@ function KillOverlay() {
 
 function PayoffOverlay() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.5 }}
-      className="space-y-3"
-    >
+    <div className="space-y-3">
       <p className="text-[15px] text-white/80 leading-relaxed font-light">
         After months of filtering, one business made it through.
       </p>
@@ -184,6 +165,6 @@ function PayoffOverlay() {
           A dry cleaner in Turku.
         </p>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
