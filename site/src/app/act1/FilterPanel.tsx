@@ -12,10 +12,7 @@ export function FilterPanel({ filters }: FilterPanelProps) {
   const { activeFilters, toggleFilter } = useFunnel();
 
   return (
-    <div
-      className="flex gap-2 overflow-x-auto pb-2 px-1 no-scrollbar"
-      style={{ touchAction: "pan-x" }}
-    >
+    <div className="flex flex-wrap gap-2">
       {filters.map((key) => {
         const isActive = activeFilters.has(key);
         return (
@@ -27,12 +24,12 @@ export function FilterPanel({ filters }: FilterPanelProps) {
               e.stopPropagation();
               toggleFilter(key);
             }}
-            className={`shrink-0 px-3 rounded-full text-[11px] tracking-wide transition-colors whitespace-nowrap ${
+            className={`px-3 py-2 rounded-full text-[11px] tracking-wide transition-colors ${
               isActive
                 ? "bg-white/20 text-white border border-white/30"
                 : "bg-white/[0.06] text-white/50 border border-white/[0.08]"
             }`}
-            style={{ minHeight: 44, lineHeight: "44px" }}
+            style={{ minHeight: 36 }}
             whileTap={{ scale: 0.95 }}
           >
             {FILTER_LABELS[key]}
