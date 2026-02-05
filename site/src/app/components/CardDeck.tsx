@@ -4,6 +4,7 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { useMotionValue, useTransform, animate } from "framer-motion";
 import { Card } from "./Card";
 import { ProgressBar } from "./ProgressBar";
+import { DevPanel } from "./DevPanel";
 import { CARDS } from "../data";
 import { DeckConfig, SpringPreset } from "../types";
 
@@ -86,6 +87,11 @@ export function CardDeck() {
     [currentIndex, config.spring, x]
   );
 
+  const handleGoToCard = useCallback((index: number) => {
+    setCurrentIndex(index);
+    x.set(0);
+  }, [x]);
+
   return (
     <div className="relative h-full w-full">
       {/* Progress bar */}
@@ -126,6 +132,15 @@ export function CardDeck() {
         onDragEnd={handleDragEnd}
         hasChevron={CARDS[currentIndex].hasVerticalReveal}
         isActive
+      />
+
+      {/* Dev panel */}
+      <DevPanel
+        config={config}
+        onConfigChange={setConfig}
+        currentIndex={currentIndex}
+        totalCards={CARDS.length}
+        onGoToCard={handleGoToCard}
       />
     </div>
   );
