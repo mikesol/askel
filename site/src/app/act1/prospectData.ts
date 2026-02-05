@@ -11,14 +11,12 @@ function mulberry32(seed: number) {
 }
 
 export type FilterKey =
-  // Criteria filters (stage 1 — card 1.2)
-  | "revenue500k"
-  | "margins20"
-  | "serviceIndustry"
-  | "ownerOperated"
-  | "scalable"
-  | "domesticMarket"
-  | "stableRevenue"
+  // DD criteria filters (stage 1 — card 1.2)
+  | "ddValidation"
+  | "ddFinancial"
+  | "ddMarket"
+  | "ddTeam"
+  | "ddSellerTerms"
   // Kill question filters (stage 2 — card 1.3)
   | "exitPath"
   | "capitalGain"
@@ -26,13 +24,11 @@ export type FilterKey =
   | "timeCommitment";
 
 export const CRITERIA_FILTERS: FilterKey[] = [
-  "revenue500k",
-  "margins20",
-  "serviceIndustry",
-  "ownerOperated",
-  "scalable",
-  "domesticMarket",
-  "stableRevenue",
+  "ddValidation",
+  "ddFinancial",
+  "ddMarket",
+  "ddTeam",
+  "ddSellerTerms",
 ];
 
 export const KILL_FILTERS: FilterKey[] = [
@@ -43,13 +39,11 @@ export const KILL_FILTERS: FilterKey[] = [
 ];
 
 export const FILTER_LABELS: Record<FilterKey, string> = {
-  revenue500k: "€500k+ rev",
-  margins20: "20%+ margins",
-  serviceIndustry: "Service industry",
-  ownerOperated: "Owner-operated",
-  scalable: "Scalable",
-  domesticMarket: "Domestic market",
-  stableRevenue: "Stable revenue",
+  ddValidation: "Validation",
+  ddFinancial: "Financials",
+  ddMarket: "Market",
+  ddTeam: "Team",
+  ddSellerTerms: "Seller terms",
   exitPath: "Exit path",
   capitalGain: "€100k+ gain",
   techUpside: "Tech upside",
@@ -97,9 +91,9 @@ function generateProspects(): Prospect[] {
     const city = i === 0 ? CITIES[3] : pickCity(); // Melers is in Turku (index 3)
     const isMelers = i === 0;
 
-    // Base pass rates for criteria filters — tuned so ~15% pass all 7
-    // Each filter has ~75% pass rate → 0.75^7 ≈ 13.3%
-    const criteriaPassRate = 0.75;
+    // Base pass rates for criteria filters — tuned so ~15% pass all 5
+    // Each filter has ~68% pass rate → 0.68^5 ≈ 14.5%
+    const criteriaPassRate = 0.68;
     // Kill question pass rates — tuned so ~25% of criteria survivors pass all 4
     // Each filter has ~72% pass rate → 0.72^4 ≈ 26.9%
     const killPassRate = 0.72;

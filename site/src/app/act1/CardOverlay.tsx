@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { CRITERIA_FILTERS, KILL_FILTERS } from "./prospectData";
+import { CRITERIA_FILTERS, KILL_FILTERS, FilterKey } from "./prospectData";
 import { FilterPanel } from "./FilterPanel";
 import { KillDetailModal } from "./KillDetailModal";
+import { CriteriaDetailModal } from "./CriteriaDetailModal";
 import { useFunnel } from "./FunnelContext";
 
 interface CardOverlayProps {
@@ -37,6 +38,43 @@ export function CardOverlay({ cardType }: CardOverlayProps) {
   );
 }
 
+function WhyButton({ onClick }: { onClick: () => void }) {
+  return (
+    <motion.button
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="fixed top-14 left-4 z-[70] pointer-events-auto"
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      onPointerDown={(e) => e.stopPropagation()}
+      onTouchStart={(e) => e.stopPropagation()}
+    >
+      <motion.div
+        className="relative flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20"
+        animate={{
+          borderColor: [
+            "rgba(255,255,255,0.2)",
+            "rgba(255,255,255,0.5)",
+            "rgba(255,255,255,0.2)",
+          ],
+        }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <motion.div
+          className="w-2 h-2 rounded-full bg-white"
+          animate={{ opacity: [0.5, 1, 0.5], scale: [0.8, 1.1, 0.8] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <span className="text-[11px] text-white/70 tracking-wide uppercase">
+          Why?
+        </span>
+      </motion.div>
+    </motion.button>
+  );
+}
+
 function SearchOverlay() {
   return (
     <motion.div
@@ -53,19 +91,38 @@ function SearchOverlay() {
 }
 
 function CriteriaOverlay() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const { activeFilters } = useFunnel();
+
+  const hasActiveCriteria = CRITERIA_FILTERS.some((f) =>
+    activeFilters.has(f)
+  );
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="space-y-4"
-    >
-      <p className="text-[15px] text-white/80 leading-relaxed font-light">
-        Below are several criteria from our search list. Tap them to see the
-        outcomes.
-      </p>
-      <FilterPanel filters={CRITERIA_FILTERS} />
-    </motion.div>
+    <>
+      {hasActiveCriteria && (
+        <WhyButton onClick={() => setModalOpen(true)} />
+      )}
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="space-y-4"
+      >
+        <p className="text-[15px] text-white/80 leading-relaxed font-light">
+          Below are several criteria from our search list. Tap them to see the
+          outcomes.
+        </p>
+        <FilterPanel filters={CRITERIA_FILTERS} />
+      </motion.div>
+
+      <CriteriaDetailModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        activeFilters={activeFilters}
+      />
+    </>
   );
 }
 
@@ -77,34 +134,8 @@ function KillOverlay() {
 
   return (
     <>
-      {/* Pulsing detail indicator — top-left, shown when filters active */}
       {hasActiveKill && (
-        <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="fixed top-14 left-4 z-[70] pointer-events-auto"
-          onClick={(e) => {
-            e.stopPropagation();
-            setModalOpen(true);
-          }}
-          onPointerDown={(e) => e.stopPropagation()}
-          onTouchStart={(e) => e.stopPropagation()}
-        >
-          <motion.div
-            className="relative flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20"
-            animate={{ borderColor: ["rgba(255,255,255,0.2)", "rgba(255,255,255,0.5)", "rgba(255,255,255,0.2)"] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <motion.div
-              className="w-2 h-2 rounded-full bg-white"
-              animate={{ opacity: [0.5, 1, 0.5], scale: [0.8, 1.1, 0.8] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <span className="text-[11px] text-white/70 tracking-wide uppercase">
-              Why?
-            </span>
-          </motion.div>
-        </motion.button>
+        <WhyButton onClick={() => setModalOpen(true)} />
       )}
 
       <motion.div
