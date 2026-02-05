@@ -93,7 +93,7 @@ export function CardDeck() {
   }, [x]);
 
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full w-full touch-none">
       {/* Progress bar */}
       {config.showProgress && (
         <ProgressBar
