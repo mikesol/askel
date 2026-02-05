@@ -205,7 +205,6 @@ export function FinlandMap({
               cx={x}
               cy={y}
               fill="white"
-              filter="url(#dot-glow)"
               initial={
                 !cascadeComplete
                   ? { r: 0, opacity: 0 }
