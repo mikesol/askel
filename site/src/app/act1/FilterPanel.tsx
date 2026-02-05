@@ -12,7 +12,7 @@ export function FilterPanel({ filters }: FilterPanelProps) {
   const { activeFilters, toggleFilter } = useFunnel();
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 justify-center">
       {filters.map((key) => {
         const isActive = activeFilters.has(key);
         return (
