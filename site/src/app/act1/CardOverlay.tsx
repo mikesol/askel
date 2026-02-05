@@ -75,8 +75,8 @@ function KillOverlay() {
       className="space-y-4"
     >
       <p className="text-[15px] text-white/80 leading-relaxed font-light">
-        Four questions every deal must survive. Most don&apos;t make it past
-        two.
+        Our most important criteria are the &ldquo;kill questions&rdquo; that we
+        ask before any deal is presented to the whole team.
       </p>
       <FilterPanel filters={KILL_FILTERS} />
     </motion.div>
