@@ -162,7 +162,7 @@ function PayoffOverlay() {
           Melers
         </p>
         <p className="text-[13px] text-white/40 font-light">
-          A dry cleaner in Turku.
+          A laundry business in Turku.
         </p>
       </motion.div>
     </div>
