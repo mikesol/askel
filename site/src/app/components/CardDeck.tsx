@@ -95,6 +95,7 @@ export function CardDeck() {
         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
         onDragEnd={handleDragEnd}
         hasChevron={CARDS[currentIndex].hasVerticalReveal}
+        isActive
       />
     </div>
   );
