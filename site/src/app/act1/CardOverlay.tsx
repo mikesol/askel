@@ -58,7 +58,7 @@ function CriteriaOverlay() {
       className="space-y-4"
     >
       <p className="text-[15px] text-white/80 leading-relaxed font-light">
-        Here are some elements from our search criteria. Tap to see the
+        Below are several criteria from our search list. Tap them to see the
         outcomes.
       </p>
       <FilterPanel filters={CRITERIA_FILTERS} />
