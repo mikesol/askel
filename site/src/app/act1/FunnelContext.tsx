@@ -33,6 +33,7 @@ interface FunnelState {
   toggleFilter: (key: FilterKey) => void;
   setStage: (stage: number) => void;
   commitAndAdvance: () => void;
+  commitCurrentFilters: (forStage: number) => void;
   undoCommit: (toStage: number) => void;
   reset: () => void;
   setCascadeComplete: (v: boolean) => void;
@@ -73,10 +74,10 @@ export function FunnelProvider({ children }: { children: ReactNode }) {
     setCurrentStage(stage);
   }, []);
 
-  const commitAndAdvance = useCallback(() => {
+  const commitCurrentFilters = useCallback((forStage: number) => {
     setStageCommits((prev) => ({
       ...prev,
-      [currentStage]: Array.from(activeFilters),
+      [forStage]: Array.from(activeFilters),
     }));
     setCommittedFilters((prev) => {
       const next = new Set(prev);
@@ -84,8 +85,12 @@ export function FunnelProvider({ children }: { children: ReactNode }) {
       return next;
     });
     setActiveFilters(new Set());
+  }, [activeFilters]);
+
+  const commitAndAdvance = useCallback(() => {
+    commitCurrentFilters(currentStage);
     setCurrentStage((s) => s + 1);
-  }, [currentStage, activeFilters]);
+  }, [currentStage, commitCurrentFilters]);
 
   const undoCommit = useCallback(
     (toStage: number) => {
@@ -158,6 +163,7 @@ export function FunnelProvider({ children }: { children: ReactNode }) {
     toggleFilter,
     setStage,
     commitAndAdvance,
+    commitCurrentFilters,
     undoCommit,
     reset,
     setCascadeComplete,

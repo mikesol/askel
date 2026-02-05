@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FinlandMap } from "../act1/FinlandMap";
 import { useFunnel } from "../act1/FunnelContext";
@@ -17,17 +17,35 @@ export function Act1MapLayer({ currentIndex, visible }: Act1MapLayerProps) {
     cascadeComplete,
     setCascadeComplete,
     setStage,
-    commitAndAdvance,
+    commitCurrentFilters,
     undoCommit,
     currentStage,
   } = useFunnel();
 
-  // Sync card index to funnel stage
+  const prevIndexRef = useRef(currentIndex);
+
+  // Handle stage transitions: commit on forward swipe, undo on backward
   useEffect(() => {
-    if (currentIndex >= 0 && currentIndex <= 3) {
+    const prevIndex = prevIndexRef.current;
+    prevIndexRef.current = currentIndex;
+
+    if (currentIndex < 0 || currentIndex > 3) return;
+    if (prevIndex === currentIndex) return;
+
+    const goingForward = currentIndex > prevIndex;
+
+    if (goingForward) {
+      // Commit active filters from the stage we're leaving
+      // Stage 1 (criteria) and Stage 2 (kill) have toggleable filters
+      if (prevIndex === 1 || prevIndex === 2) {
+        commitCurrentFilters(prevIndex);
+      }
       setStage(currentIndex);
+    } else {
+      // Going backward — undo commits back to where we're going
+      undoCommit(currentIndex);
     }
-  }, [currentIndex, setStage]);
+  }, [currentIndex, setStage, commitCurrentFilters, undoCommit]);
 
   // Trigger cascade completion after initial dot animation
   useEffect(() => {

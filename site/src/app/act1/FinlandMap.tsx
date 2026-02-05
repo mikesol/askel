@@ -53,8 +53,10 @@ export function getProspectState(
 ): ProspectVisualState {
   const prospect = PROSPECTS[prospectId];
 
-  // On the payoff card, Melers is special
-  if (prospect.isMelers && currentStage === 3) return "melers";
+  // On the payoff card (stage 3): Melers pulses, everyone else dies
+  if (currentStage === 3) {
+    return prospect.isMelers ? "melers" : "dead";
+  }
 
   // Check if prospect fails any committed filter — it's dead
   if (committedFilters.size > 0 && !getProspectPassesFilters(prospect, committedFilters)) {
@@ -116,6 +118,27 @@ export function FinlandMap({
           strokeOpacity={0.08}
           strokeWidth={1.5}
         />
+
+        {/* Melers label — shown on payoff card */}
+        {currentStage === 3 && (() => {
+          const melers = PROSPECTS.find((p) => p.isMelers);
+          if (!melers) return null;
+          const pos = latLonToSvg(melers.lat, melers.lon);
+          return (
+            <motion.text
+              x={pos.x + 14}
+              y={pos.y + 4}
+              fill="white"
+              fontSize="14"
+              fontWeight="500"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1 }}
+            >
+              Melers
+            </motion.text>
+          );
+        })()}
 
         {/* Prospect dots */}
         {PROSPECTS.map((prospect, i) => {
