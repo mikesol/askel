@@ -147,6 +147,28 @@ export const content = {
         { value: "<100", label: "Days to close" },
         { value: "94+", label: "Prospects analyzed" },
       ],
+      timeline: [
+        {
+          title: "Discovery",
+          body: "Identified via our broker network of 100+ contacts across Finland. Matched our criteria: essential service business, loyal B2B customer base, aging founder with no succession plan.",
+        },
+        {
+          title: "Due Diligence",
+          body: "Rigorous 50-item framework covering financials, operations, customer contracts, equipment condition, and employee interviews. Multiple site visits to the Turku facility.",
+        },
+        {
+          title: "Negotiation",
+          body: "Fair valuation based on true business value — not just public records. Respectful terms that honored 30+ years of the founders' work.",
+        },
+        {
+          title: "Close",
+          body: "Under 100 days from first contact to ownership transfer. Smooth handover with full cooperation from the founding team.",
+        },
+        {
+          title: "Operations",
+          body: "Digitalization of booking and logistics systems, new management processes, and full team retention. The business keeps its name, identity, and relationships.",
+        },
+      ],
     },
     contact: {
       label: "Contact",
@@ -335,6 +357,28 @@ export const content = {
         { value: "49", label: "Yritysasiakasta" },
         { value: "<100", label: "Päivää kauppaan" },
         { value: "94+", label: "Kohdetta analysoitu" },
+      ],
+      timeline: [
+        {
+          title: "Löytö",
+          body: "Tunnistettu yli 100 kontaktin meklarverkostomme kautta Suomessa. Täytti kriteerimme: välttämätön palveluyritys, uskollinen B2B-asiakaskunta, ikääntyvä perustaja ilman seuraajasuunnitelmaa.",
+        },
+        {
+          title: "Due Diligence",
+          body: "Tiukka 50-kohdan kehys, joka kattaa talouden, operaatiot, asiakassopimukset, laitteiden kunnon ja henkilöstöhaastattelut. Useita vierailuja Turun toimitiloihin.",
+        },
+        {
+          title: "Neuvottelu",
+          body: "Reilu arvostus todellisen liiketoiminta-arvon perusteella — ei pelkästään julkisten tietojen pohjalta. Kunnioittavat ehdot, jotka kunnioittivat perustajien yli 30 vuoden työtä.",
+        },
+        {
+          title: "Kauppa",
+          body: "Alle 100 päivää ensikontaktista omistuksen siirtoon. Sujuva luovutus perustajapariskunnan täydellä yhteistyöllä.",
+        },
+        {
+          title: "Operaatiot",
+          body: "Varaus- ja logistiikkajärjestelmien digitalisointi, uudet johtamisprosessit ja koko tiimin säilyttäminen. Yritys pitää nimensä, identiteettinsä ja suhteensa.",
+        },
       ],
     },
     contact: {

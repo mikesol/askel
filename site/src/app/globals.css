@@ -53,6 +53,15 @@ html, body {
   background-size: 128px 128px;
 }
 
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Fade-in horizontal rule */
 .hr-fade {
   height: 1px;
