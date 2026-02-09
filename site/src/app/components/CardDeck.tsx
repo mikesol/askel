@@ -8,7 +8,9 @@ import { DevPanel } from "./DevPanel";
 import { CARDS } from "../data";
 import { DeckConfig, SpringPreset } from "../types";
 import { FunnelProvider } from "../act1/FunnelContext";
+import { SankeyProvider } from "../act2/SankeyContext";
 import { Act1MapLayer } from "./Act1MapLayer";
+import { Act2SankeyLayer } from "./Act2SankeyLayer";
 
 const SPRING_CONFIGS: Record<SpringPreset, { stiffness: number; damping: number }> = {
   snappy: { stiffness: 500, damping: 30 },
@@ -19,18 +21,26 @@ const SPRING_CONFIGS: Record<SpringPreset, { stiffness: number; damping: number 
 const SWIPE_THRESHOLD_RATIO = 0.15;
 const VELOCITY_THRESHOLD = 300; // px/s — a quick flick triggers even with small offset
 
-// Act 1 card indices (0-based)
+// Act card indices (0-based)
 const ACT1_FIRST = 0;
 const ACT1_LAST = 3;
+const ACT2_FIRST = 4;
+const ACT2_LAST = 8;
 
 function isAct1(index: number) {
   return index >= ACT1_FIRST && index <= ACT1_LAST;
 }
 
+function isAct2(index: number) {
+  return index >= ACT2_FIRST && index <= ACT2_LAST;
+}
+
 export function CardDeck() {
   return (
     <FunnelProvider>
-      <CardDeckInner />
+      <SankeyProvider>
+        <CardDeckInner />
+      </SankeyProvider>
     </FunnelProvider>
   );
 }
@@ -43,8 +53,9 @@ function CardDeckInner() {
     showProgress: true,
   });
 
-  // Track map fade-out when leaving Act 1
+  // Track persistent layer visibility per act
   const [mapVisible, setMapVisible] = useState(true);
+  const [sankeyVisible, setSankeyVisible] = useState(false);
 
   const currentIndexRef = useRef(currentIndex);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,9 +64,12 @@ function CardDeckInner() {
   useEffect(() => {
     currentIndexRef.current = currentIndex;
     dragProgress.set(currentIndex);
-    // Show/hide map based on whether we're in Act 1
+    // Show/hide persistent layers based on current act
     if (isAct1(currentIndex)) {
       setMapVisible(true);
+    }
+    if (isAct2(currentIndex)) {
+      setSankeyVisible(true);
     }
   }, [currentIndex, dragProgress]);
 
@@ -97,9 +111,15 @@ function CardDeckInner() {
           type: "spring",
           ...spring,
           onComplete: () => {
-            // Fade out map when leaving Act 1
+            // Fade out persistent layers when leaving an act
             if (currentIndex === ACT1_LAST && goingToIndex > ACT1_LAST) {
               setMapVisible(false);
+            }
+            if (goingToIndex === ACT2_FIRST && !isAct2(currentIndex)) {
+              setSankeyVisible(true);
+            }
+            if (currentIndex === ACT2_LAST && goingToIndex > ACT2_LAST) {
+              setSankeyVisible(false);
             }
             setCurrentIndex(goingToIndex);
             x.set(0);
@@ -113,9 +133,15 @@ function CardDeckInner() {
           type: "spring",
           ...spring,
           onComplete: () => {
-            // Show map when re-entering Act 1
+            // Show persistent layers when re-entering an act
             if (!isAct1(currentIndex) && isAct1(goingToIndex)) {
               setMapVisible(true);
+            }
+            if (!isAct2(currentIndex) && isAct2(goingToIndex)) {
+              setSankeyVisible(true);
+            }
+            if (isAct2(currentIndex) && !isAct2(goingToIndex)) {
+              setSankeyVisible(false);
             }
             setCurrentIndex(goingToIndex);
             x.set(0);
@@ -133,10 +159,12 @@ function CardDeckInner() {
   const handleGoToCard = useCallback((index: number) => {
     setCurrentIndex(index);
     setMapVisible(isAct1(index));
+    setSankeyVisible(isAct2(index));
     x.set(0);
   }, [x]);
 
   const showMap = mapVisible && isAct1(currentIndex);
+  const showSankey = sankeyVisible && isAct2(currentIndex);
 
   return (
     <div className="relative h-full w-full touch-none">
@@ -153,6 +181,12 @@ function CardDeckInner() {
       <Act1MapLayer
         currentIndex={currentIndex}
         visible={showMap}
+      />
+
+      {/* Sankey diagram — persistent z-10 layer during Act 2 */}
+      <Act2SankeyLayer
+        currentIndex={currentIndex}
+        visible={showSankey}
       />
 
       {/* Behind card (previous — visible when dragging right) */}

@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { motion, useMotionValue, useTransform, animate, MotionValue } from "framer-motion";
 import { CardData, CardSkin } from "../types";
 import { CardOverlay } from "../act1/CardOverlay";
+import { Act2Overlay } from "../act2/Act2Overlay";
 
 const SKIN_CLASSES: Record<CardSkin, string> = {
   dark: "bg-[#0a0a0a] border border-white/[0.08] text-white",
@@ -11,6 +12,7 @@ const SKIN_CLASSES: Record<CardSkin, string> = {
   depth: "bg-white text-black shadow-[0_0_60px_rgba(255,255,255,0.05)] border border-white/20",
   glass: "bg-white/[0.05] backdrop-blur-xl border border-white/[0.1] text-white",
   act1: "bg-transparent text-white",
+  act2: "bg-transparent text-white",
 };
 
 const REVEAL_THRESHOLD = 0.2; // 20% of viewport height
@@ -92,7 +94,9 @@ export function Card({
 
   const canReveal = card.hasVerticalReveal && isActive;
   const isAct1 = card.cardType?.startsWith("act1-");
-  const effectiveSkin = isAct1 ? "act1" : skin;
+  const isAct2 = card.cardType?.startsWith("act2-");
+  const isActCard = isAct1 || isAct2;
+  const effectiveSkin = isAct1 ? "act1" : isAct2 ? "act2" : skin;
 
   return (
     <motion.div
@@ -108,8 +112,13 @@ export function Card({
         <CardOverlay cardType={card.cardType} />
       )}
 
-      {/* Non-Act1 cards: standard content */}
-      {!isAct1 && (
+      {/* Act 2 cards: transparent overlay with narrative text */}
+      {isAct2 && card.cardType && (
+        <Act2Overlay cardType={card.cardType} />
+      )}
+
+      {/* Non-act cards: standard content */}
+      {!isActCard && (
         <>
           {/* Revealed back face */}
           {canReveal && (
@@ -162,7 +171,7 @@ export function Card({
       {/* Swipe hint on first card */}
       {showSwipeHint && (
         <motion.div
-          className={`absolute flex items-center gap-2 text-white/70 ${isAct1 ? "top-[77%]" : "bottom-10"}`}
+          className={`absolute flex items-center gap-2 text-white/70 ${isActCard ? "top-[77%]" : "bottom-10"}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: [0.15, 0.8, 0.15] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}

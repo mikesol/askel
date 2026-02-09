@@ -1,4 +1,4 @@
-export type CardSkin = "dark" | "stark" | "depth" | "glass" | "act1";
+export type CardSkin = "dark" | "stark" | "depth" | "glass" | "act1" | "act2";
 export type SpringPreset = "snappy" | "smooth" | "heavy";
 
 export interface CardData {
