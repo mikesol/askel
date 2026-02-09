@@ -3,8 +3,8 @@
 import { LanguageProvider, useLanguage } from "./components/LanguageProvider";
 import { Nav } from "./components/Nav";
 import { TypewriterHero } from "./components/TypewriterHero";
-import { Section } from "./components/Section";
 import { Footer } from "./components/Footer";
+import { WavePathDivider } from "./components/WavePathDivider";
 // import { FeatureCarousel } from "./components/FeatureCarousel";
 // import { TeamGallery } from "./components/TeamGallery";
 // import { ZoomParallax } from "./components/ZoomParallax";
@@ -28,16 +28,30 @@ function PageContent() {
         <TypewriterHero />
 
         {/* Statement */}
-        <Section id="statement" label={t.statement.label}>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight gradient-text leading-tight max-w-3xl">
-            {t.statement.heading}
-          </h2>
-          <p className="mt-6 text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
-            {t.statement.body}
-          </p>
-        </Section>
+        <section id="statement" className="relative flex min-h-[60vh] flex-col items-center justify-center py-24 lg:py-32">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-10 left-1/2 size-full -translate-x-1/2 rounded-full opacity-[0.07] blur-[30px]"
+            style={{ background: "radial-gradient(ellipse at center, var(--color-text-primary), transparent 50%)" }}
+          />
 
-        <div className="hr-fade" />
+          <div className="flex w-[70vw] flex-col items-end">
+            <WavePathDivider className="mb-10" />
+            <div className="flex w-full flex-col items-end">
+              <div className="flex justify-end gap-8">
+                <p className="text-[var(--color-text-secondary)] mt-2 text-sm shrink-0">
+                  {t.statement.label}
+                </p>
+                <p className="text-[var(--color-text-primary)] opacity-80 w-3/4 text-2xl md:text-4xl leading-snug">
+                  {t.statement.heading}
+                </p>
+              </div>
+              <p className="mt-8 text-base text-[var(--color-text-secondary)] leading-relaxed max-w-2xl text-right">
+                {t.statement.body}
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* Feature Carousel — replaces 3 separate sections */}
         {/* <FeatureCarousel /> */}
