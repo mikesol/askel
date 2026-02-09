@@ -1,231 +1,261 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { LanguageProvider, useLanguage } from "./components/LanguageProvider";
+import { Nav } from "./components/Nav";
+import { TypewriterHero } from "./components/TypewriterHero";
+import { Section } from "./components/Section";
+import { Footer } from "./components/Footer";
+import { content } from "./content";
 
-// Flip to true to show the style/scale switcher UI
-const SHOW_SWITCHER = false;
-
-const BUTTON_STYLES = [
-  {
-    name: "Bordered",
-    className:
-      "border border-white/[0.15] rounded-lg hover:border-white/30 hover:bg-white/[0.03]",
-  },
-  {
-    name: "Sharp",
-    className:
-      "border border-white/[0.12] rounded-sm hover:border-white/25 hover:bg-white/[0.03]",
-  },
-  {
-    name: "Pill",
-    className:
-      "border border-white/[0.15] rounded-full hover:border-white/30 hover:bg-white/[0.03]",
-  },
-  {
-    name: "Filled",
-    className:
-      "bg-white/[0.06] rounded-lg border border-transparent hover:bg-white/[0.1]",
-  },
-  {
-    name: "Underline",
-    className:
-      "border-b border-white/[0.15] rounded-none hover:border-white/40",
-  },
-  {
-    name: "Ghost",
-    className: "rounded-lg hover:bg-white/[0.05]",
-  },
-];
-
-// Harmonious typographic presets — heading scales faster than body
-const TYPE_SCALES = [
-  {
-    name: "S",
-    navLogo: 11, navItem: 10, h1: 14, subtitle: 11, button: 12, mobileMenu: 12,
-    btnPx: 24, btnPy: 12, btnMin: 140, rule: 64,
-  },
-  {
-    name: "M-",
-    navLogo: 12, navItem: 11, h1: 15, subtitle: 12, button: 13, mobileMenu: 13,
-    btnPx: 28, btnPy: 14, btnMin: 150, rule: 72,
-  },
-  {
-    name: "M",
-    navLogo: 13, navItem: 12, h1: 17, subtitle: 13, button: 14, mobileMenu: 14,
-    btnPx: 32, btnPy: 16, btnMin: 160, rule: 80,
-  },
-  {
-    name: "L",
-    navLogo: 14, navItem: 13, h1: 20, subtitle: 14, button: 15, mobileMenu: 15,
-    btnPx: 36, btnPy: 18, btnMin: 170, rule: 88,
-  },
-  {
-    name: "XL",
-    navLogo: 15, navItem: 14, h1: 24, subtitle: 15, button: 16, mobileMenu: 16,
-    btnPx: 40, btnPy: 20, btnMin: 180, rule: 96,
-  },
-  {
-    name: "2XL",
-    navLogo: 16, navItem: 15, h1: 28, subtitle: 16, button: 18, mobileMenu: 18,
-    btnPx: 44, btnPy: 20, btnMin: 200, rule: 104,
-  },
-];
-
-export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [styleIndex, setStyleIndex] = useState(2); // Pill
-  const [scaleIndex, setScaleIndex] = useState(0); // S
-
-  const style = BUTTON_STYLES[styleIndex];
-  const t = TYPE_SCALES[scaleIndex];
+function PageContent() {
+  const { language } = useLanguage();
+  const t = content[language];
 
   return (
-    <main className="h-dvh w-full bg-black overflow-hidden relative grain">
-      {/* Top navigation bar */}
-      <nav className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 sm:px-10 py-5">
-        <span
-          style={{ fontSize: t.navLogo }}
-          className="font-medium tracking-[0.25em] uppercase text-white/80 transition-all duration-300"
-        >
-          Askel
-        </span>
+    <>
+      <Nav />
 
-        {/* Desktop nav */}
-        <div className="hidden sm:flex items-center gap-8">
-          {["About", "Case Studies", "Contact"].map((item) => (
-            <a
-              key={item}
-              href="#"
-              style={{ fontSize: t.navItem }}
-              className="font-light tracking-[0.15em] uppercase text-white/50 hover:text-white/80 transition-all duration-300"
-            >
-              {item}
-            </a>
-          ))}
-        </div>
+      <main>
+        {/* Hero */}
+        <TypewriterHero />
 
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="sm:hidden flex flex-col gap-[5px] cursor-pointer p-1"
-          aria-label="Menu"
-        >
-          <motion.span
-            className="block w-5 h-[1px] bg-white/70 origin-center"
-            animate={menuOpen ? { rotate: 45, y: 3 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.25 }}
-          />
-          <motion.span
-            className="block w-5 h-[1px] bg-white/70 origin-center"
-            animate={menuOpen ? { rotate: -45, y: -3 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.25 }}
-          />
-        </button>
-      </nav>
-
-      {/* Mobile menu overlay */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            className="fixed inset-0 z-40 bg-black/95 flex flex-col items-center justify-center gap-8 sm:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-          >
-            {["About", "Case Studies", "Contact"].map((item, i) => (
-              <motion.a
-                key={item}
-                href="#"
-                style={{ fontSize: t.mobileMenu }}
-                className="font-light tracking-[0.2em] uppercase text-white/70 hover:text-white transition-all duration-300"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05 * i, duration: 0.3 }}
-                onClick={() => setMenuOpen(false)}
-              >
-                {item}
-              </motion.a>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Hero content */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center landing-glow">
-        <motion.div
-          className="flex flex-col items-center text-center px-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.15 }}
-        >
-          <h1
-            style={{ fontSize: t.h1 }}
-            className="font-medium tracking-[0.35em] uppercase text-white transition-all duration-300"
-          >
-            Askel Ventures
-          </h1>
-
-          <div
-            className="hr-fade mt-6 mb-6 transition-all duration-300"
-            style={{ width: t.rule }}
-          />
-
-          <p
-            style={{ fontSize: t.subtitle }}
-            className="font-light tracking-[0.2em] uppercase text-white/50 mb-14 transition-all duration-300"
-          >
-            A New Private Equity Firm
+        {/* Statement */}
+        <Section id="statement" label={t.statement.label}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight gradient-text leading-tight max-w-3xl">
+            {t.statement.heading}
+          </h2>
+          <p className="mt-6 text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
+            {t.statement.body}
           </p>
+        </Section>
 
-          {/* Three CTA buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
-            {["Investors", "Owners", "Operators"].map((label) => (
-              <a
-                key={label}
-                href="#"
-                style={{
-                  fontSize: t.button,
-                  paddingLeft: t.btnPx,
-                  paddingRight: t.btnPx,
-                  paddingTop: t.btnPy,
-                  paddingBottom: t.btnPy,
-                  minWidth: t.btnMin,
-                }}
-                className={`font-normal tracking-[0.08em] text-white/90 transition-all duration-300 text-center ${style.className}`}
-              >
-                {label}
-              </a>
+        <div className="hr-fade" />
+
+        {/* For Investors */}
+        <Section id="investors" label={t.investors.label}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight gradient-text leading-tight">
+            {t.investors.heading}
+          </h2>
+          <p className="mt-6 text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
+            {t.investors.body}
+          </p>
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {t.investors.points.map((point) => (
+              <FeatureCard
+                key={point.title}
+                title={point.title}
+                description={point.description}
+              />
             ))}
           </div>
-        </motion.div>
-      </div>
+        </Section>
 
-      {/* Style cycler — hidden, set SHOW_SWITCHER to true to re-enable */}
-      {SHOW_SWITCHER && (
-        <div className="absolute bottom-6 right-6 z-50 flex items-center gap-2">
-          <button
-            onClick={() => setStyleIndex((styleIndex + 1) % BUTTON_STYLES.length)}
-            className="flex items-center gap-2 px-3 py-2 text-[10px] tracking-[0.1em] uppercase text-white/40 bg-white/[0.04] border border-white/[0.08] rounded hover:bg-white/[0.08] hover:text-white/60 transition-all duration-200 cursor-pointer"
-          >
-            <span className="text-white/20">Style</span>
-            <span className="text-white/60 font-medium min-w-[60px] text-right">
-              {style.name}
-            </span>
-          </button>
+        <div className="hr-fade" />
 
-          <button
-            onClick={() => setScaleIndex((scaleIndex + 1) % TYPE_SCALES.length)}
-            className="flex items-center gap-2 px-3 py-2 text-[10px] tracking-[0.1em] uppercase text-white/40 bg-white/[0.04] border border-white/[0.08] rounded hover:bg-white/[0.08] hover:text-white/60 transition-all duration-200 cursor-pointer"
-          >
-            <span className="text-white/20">Scale</span>
-            <span className="text-white/60 font-medium min-w-[24px] text-right">
-              {t.name}
-            </span>
-          </button>
-        </div>
-      )}
-    </main>
+        {/* For Sellers */}
+        <Section id="owners" label={t.owners.label}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight gradient-text leading-tight">
+            {t.owners.heading}
+          </h2>
+          <p className="mt-6 text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
+            {t.owners.body}
+          </p>
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {t.owners.points.map((point) => (
+              <FeatureCard
+                key={point.title}
+                title={point.title}
+                description={point.description}
+              />
+            ))}
+          </div>
+        </Section>
+
+        <div className="hr-fade" />
+
+        {/* For Operators */}
+        <Section id="operators" label={t.operators.label}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight gradient-text leading-tight">
+            {t.operators.heading}
+          </h2>
+          <p className="mt-6 text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
+            {t.operators.body}
+          </p>
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {t.operators.points.map((point) => (
+              <FeatureCard
+                key={point.title}
+                title={point.title}
+                description={point.description}
+              />
+            ))}
+          </div>
+        </Section>
+
+        <div className="hr-fade" />
+
+        {/* About / Team */}
+        <Section id="about" label={t.about.label}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight gradient-text leading-tight">
+            {t.about.heading}
+          </h2>
+          <p className="mt-6 text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
+            {t.about.body}
+          </p>
+          <div className="mt-12 border-t border-[var(--color-border-subtle)] pt-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {t.about.team.map((member, i) => (
+                <motion.div
+                  key={member.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.5,
+                    delay: i * 0.1,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                >
+                  <div className="relative w-20 h-20 rounded-full overflow-hidden border border-[var(--color-border-subtle)] bg-[var(--color-bg-elevated)]">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                    />
+                  </div>
+                  <p className="mt-3 text-sm font-medium text-white">
+                    {member.name}
+                  </p>
+                  <p className="text-xs text-[var(--color-text-secondary)]">
+                    {member.role}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {member.ventures.map((v) => (
+                      <span
+                        key={v}
+                        className="text-[10px] text-[var(--color-text-tertiary)] border border-[var(--color-border-subtle)] rounded-full px-2 py-0.5"
+                      >
+                        {v}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </Section>
+
+        <div className="hr-fade" />
+
+        {/* Case Study */}
+        <Section id="case-study" label={t.caseStudy.label}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight gradient-text leading-tight">
+            {t.caseStudy.heading}
+          </h2>
+          <p className="text-sm text-[var(--color-accent)] mt-2">
+            {t.caseStudy.subtitle}
+          </p>
+          <p className="mt-6 text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
+            {t.caseStudy.body}
+          </p>
+          {/* Stats grid — 21st.dev inspired left-aligned stats */}
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {t.caseStudy.stats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                className="flex flex-col justify-between p-5 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-elevated)]"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.08,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+              >
+                <p className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--color-accent)]">
+                  {stat.value}
+                </p>
+                <p className="mt-2 text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                  {stat.label}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </Section>
+
+        <div className="hr-fade" />
+
+        {/* Contact */}
+        <Section id="contact" label={t.contact.label}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight gradient-text leading-tight">
+            {t.contact.heading}
+          </h2>
+          <p className="mt-6 text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
+            {t.contact.body}
+          </p>
+          <div className="mt-10 flex flex-col sm:flex-row items-start gap-6">
+            <a
+              href={`mailto:${t.contact.email}`}
+              className="inline-flex items-center justify-center text-sm font-semibold text-black bg-white hover:bg-white/90 px-6 py-3 rounded-lg transition-all duration-150"
+            >
+              {t.contact.cta}
+            </a>
+            <div className="flex flex-col gap-1">
+              <a
+                href={`mailto:${t.contact.email}`}
+                className="text-sm text-[var(--color-text-secondary)] hover:text-white transition-colors"
+              >
+                {t.contact.email}
+              </a>
+              <p className="text-sm text-[var(--color-text-tertiary)]">
+                {t.contact.location}
+              </p>
+            </div>
+          </div>
+        </Section>
+      </main>
+
+      <Footer />
+    </>
+  );
+}
+
+function FeatureCard({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
+  return (
+    <motion.div
+      className="group relative p-6 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-elevated)] hover:border-white/[0.12] transition-colors duration-200"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {/* Corner accents — inspired by 21st.dev Features 10 */}
+      <span className="absolute -left-px -top-px block size-1.5 border-l border-t border-[var(--color-accent)] opacity-0 group-hover:opacity-100 transition-opacity" />
+      <span className="absolute -right-px -top-px block size-1.5 border-r border-t border-[var(--color-accent)] opacity-0 group-hover:opacity-100 transition-opacity" />
+      <span className="absolute -bottom-px -left-px block size-1.5 border-b border-l border-[var(--color-accent)] opacity-0 group-hover:opacity-100 transition-opacity" />
+      <span className="absolute -bottom-px -right-px block size-1.5 border-b border-r border-[var(--color-accent)] opacity-0 group-hover:opacity-100 transition-opacity" />
+      <h3 className="text-base font-semibold text-white">{title}</h3>
+      <p className="mt-2 text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        {description}
+      </p>
+    </motion.div>
+  );
+}
+
+export default function Home() {
+  return (
+    <LanguageProvider>
+      <PageContent />
+    </LanguageProvider>
   );
 }

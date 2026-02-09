@@ -1,16 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const archivo = Archivo({
+const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-archivo",
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
-  title: "Askel Ventures",
-  description: "A New Private Equity Firm",
+  title: "Askel — Flipping boring businesses",
+  description:
+    "Patient capital for companies that deserve better stewardship. Askel acquires and nurtures legacy businesses across the Nordics.",
 };
 
 export const viewport: Viewport = {
@@ -25,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={archivo.variable}>
-      <body className="bg-black overflow-hidden h-dvh font-sans">
+    <html lang="en" className={inter.variable}>
+      <body className="bg-[var(--color-bg-primary)] font-sans antialiased grain">
         {children}
       </body>
     </html>
