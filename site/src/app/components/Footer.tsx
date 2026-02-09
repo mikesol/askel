@@ -8,7 +8,7 @@ export function Footer() {
   const t = content[language].footer;
 
   return (
-    <footer className="border-t border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)]">
+    <footer className="border-t border-[var(--color-border-subtle)]">
       <div className="max-w-6xl mx-auto px-6 py-16 lg:py-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand column */}
