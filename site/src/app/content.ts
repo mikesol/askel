@@ -15,8 +15,8 @@ export const content = {
       words: ["old", "boring", "traditional", "mom-and-pop", "brick-and-mortar"],
       suffix: "businesses",
       subtitle:
-        "We acquire small businesses and unlock value through digitalization that others overlook.",
-      cta1: "Get Started",
+        "Turning old companies into Growth Ventures",
+      cta1: "Get In Touch",
       cta2: "Learn More",
     },
     statement: {

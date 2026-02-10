@@ -5,12 +5,13 @@ import { Nav } from "./components/Nav";
 import { TypewriterHero } from "./components/TypewriterHero";
 import { Footer } from "./components/Footer";
 import { WavePathDivider } from "./components/WavePathDivider";
+import { StaircasePulse } from "./components/StaircasePulse";
 // import { FeatureCarousel } from "./components/FeatureCarousel";
 // import { TeamGallery } from "./components/TeamGallery";
 // import { ZoomParallax } from "./components/ZoomParallax";
 // import { CaseTimeline } from "./components/CaseTimeline";
 import { WavePathContact } from "./components/WavePath";
-import { StaircaseCanvas } from "./components/StaircaseCanvas";
+// import { StaircaseCanvas } from "./components/StaircaseCanvas";
 import { content } from "./content";
 
 function PageContent() {
@@ -19,7 +20,7 @@ function PageContent() {
 
   return (
     <>
-      <StaircaseCanvas />
+      {/* <StaircaseCanvas /> */}
       <div className="relative z-[1]">
       <Nav />
 
@@ -28,27 +29,22 @@ function PageContent() {
         <TypewriterHero />
 
         {/* Statement */}
-        <section id="statement" className="relative flex min-h-[60vh] flex-col items-center justify-center py-24 lg:py-32">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -top-10 left-1/2 size-full -translate-x-1/2 rounded-full opacity-[0.07] blur-[30px]"
-            style={{ background: "radial-gradient(ellipse at center, var(--color-text-primary), transparent 50%)" }}
-          />
-
-          <div className="flex w-[70vw] flex-col items-end">
-            <WavePathDivider className="mb-10" />
-            <div className="flex w-full flex-col items-end">
-              <div className="flex justify-end gap-8">
-                <p className="text-[var(--color-text-secondary)] mt-2 text-sm shrink-0">
+        <section id="statement" className="relative py-24 lg:py-32">
+          <div className="max-w-6xl mx-auto px-6">
+            <WavePathDivider className="mb-16 mx-auto" />
+            <div className="flex gap-12 lg:gap-20 items-start">
+              <StaircasePulse className="hidden md:block w-48 lg:w-64 h-64 lg:h-80 shrink-0" />
+              <div className="flex-1">
+                <p className="text-[var(--color-text-secondary)] text-sm mb-4">
                   {t.statement.label}
                 </p>
-                <p className="text-[var(--color-text-primary)] opacity-80 w-3/4 text-2xl md:text-4xl leading-snug">
+                <h2 className="text-2xl md:text-4xl lg:text-5xl leading-snug text-[var(--color-text-primary)] opacity-80">
                   {t.statement.heading}
+                </h2>
+                <p className="mt-6 text-base text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
+                  {t.statement.body}
                 </p>
               </div>
-              <p className="mt-8 text-base text-[var(--color-text-secondary)] leading-relaxed max-w-2xl text-right">
-                {t.statement.body}
-              </p>
             </div>
           </div>
         </section>

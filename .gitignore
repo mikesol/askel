@@ -1,5 +1,21 @@
+# Dependencies & env
 .venv
 .env
 node_modules
 dist
+
+# OS
 .DS_Store
+
+# Python tooling
+*.pyc
+__pycache__/
+.python-version
+pyproject.toml
+uv.lock
+
+# Research & reference (screenshots, interviews, exports, notes)
+_reference/
+
+# Empty placeholder
+README.md

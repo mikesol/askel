@@ -89,9 +89,9 @@ export function WavePathContact() {
         >
           <defs>
             <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#00d4aa" stopOpacity="0" />
-              <stop offset="50%" stopColor="#00d4aa" stopOpacity="1" />
-              <stop offset="100%" stopColor="#00d4aa" stopOpacity="0" />
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0" />
+              <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
             </linearGradient>
             <filter id="waveGlow">
               <feGaussianBlur stdDeviation="8" result="blur" />
@@ -114,7 +114,7 @@ export function WavePathContact() {
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
-        <p className="text-[var(--color-accent)] text-sm font-medium uppercase tracking-widest mb-4">
+        <p className="text-[var(--color-text-secondary)] text-sm font-medium uppercase tracking-widest mb-4">
           {t.label}
         </p>
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight gradient-text leading-tight">
