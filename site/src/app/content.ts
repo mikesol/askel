@@ -185,17 +185,17 @@ export const content = {
         {
           title: "Company",
           links: [
-            { label: "About", href: "#about" },
-            { label: "Case Study", href: "#case-study" },
-            { label: "Contact", href: "#contact" },
+            { label: "About", href: "/#about" },
+            { label: "Case Study", href: "/case-study" },
+            { label: "Contact", href: "/#contact" },
           ],
         },
         {
           title: "Stakeholders",
           links: [
-            { label: "For Investors", href: "#investors" },
-            { label: "For Sellers", href: "#owners" },
-            { label: "For Operators", href: "#operators" },
+            { label: "For Investors", href: "/investors" },
+            { label: "For Sellers", href: "/sellers" },
+            { label: "For Operators", href: "/operators" },
           ],
         },
         {
@@ -396,17 +396,17 @@ export const content = {
         {
           title: "Yritys",
           links: [
-            { label: "Meistä", href: "#about" },
-            { label: "Case Study", href: "#case-study" },
-            { label: "Yhteystiedot", href: "#contact" },
+            { label: "Meistä", href: "/#about" },
+            { label: "Case Study", href: "/case-study" },
+            { label: "Yhteystiedot", href: "/#contact" },
           ],
         },
         {
           title: "Sidosryhmät",
           links: [
-            { label: "Sijoittajille", href: "#investors" },
-            { label: "Myyjille", href: "#owners" },
-            { label: "Operoijille", href: "#operators" },
+            { label: "Sijoittajille", href: "/investors" },
+            { label: "Myyjille", href: "/sellers" },
+            { label: "Operoijille", href: "/operators" },
           ],
         },
         {

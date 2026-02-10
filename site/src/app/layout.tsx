@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
+import { LanguageProvider } from "./components/LanguageProvider";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -28,7 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={dmSans.variable}>
       <body className="bg-[var(--color-bg-primary)] font-sans antialiased grain">
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

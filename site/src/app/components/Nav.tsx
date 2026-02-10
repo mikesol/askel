@@ -11,7 +11,7 @@ export function Nav() {
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-[var(--color-border-subtle)]">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Wordmark */}
-        <a href="#" className="text-lg font-semibold text-white tracking-tight">
+        <a href="/" className="text-lg font-semibold text-white tracking-tight">
           Askel
         </a>
 
@@ -24,7 +24,7 @@ export function Nav() {
             {t.langToggle}
           </button>
           <a
-            href="#contact"
+            href="/#contact"
             className="text-sm font-semibold text-white border border-white/20 hover:border-white/40 hover:bg-white/[0.06] px-4 py-2 rounded-lg transition-all duration-150"
           >
             {language === "en" ? "Get In Touch" : "Ota yhteyttä"}
