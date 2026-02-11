@@ -94,6 +94,58 @@ export function ZoomParallaxAbout() {
   const activePositions = isMobile ? mobilePositions : desktopPositions;
   const activeScales = isMobile ? mobileScales : desktopScales;
 
+  // Mobile: static layout, no parallax
+  if (isMobile) {
+    return (
+      <section id="about">
+        {/* Team photo with overlay heading */}
+        <div className="relative">
+          <div className="relative aspect-[4/3] overflow-hidden">
+            <Image
+              src="/zoom-parallax/team.webp"
+              alt="Askel team"
+              fill
+              className="object-cover"
+              sizes="100vw"
+              loading="eager"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          </div>
+          <div className="absolute inset-x-0 bottom-0 px-6 pb-6">
+            <div className="rounded-xl bg-black/60 backdrop-blur-sm px-5 py-4">
+              <h2 className="text-2xl font-bold tracking-tight gradient-text leading-tight">
+                {t.heading}
+              </h2>
+              <p className="mt-2 text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                {t.body.split("\n\n")[0]}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Team grid — single column on mobile */}
+        <div className="px-6 py-12">
+          <div className="grid grid-cols-1 gap-8">
+            {t.team.map((member) => (
+              <div key={member.name} className="border-t border-white/10 pt-6">
+                <h3 className="text-lg font-semibold text-white">
+                  {member.name}
+                </h3>
+                <p className="text-sm text-[var(--color-accent)] mt-1">
+                  {member.role}
+                </p>
+                <p className="text-xs text-[var(--color-text-tertiary)] mt-2">
+                  {member.tags.join(" · ")}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Desktop: full parallax experience
   return (
     <section id="about">
       <div ref={container} className="relative h-[300vh]">
@@ -115,7 +167,7 @@ export function ZoomParallaxAbout() {
                 <motion.div
                   className={`relative overflow-hidden rounded-xl ${
                     isCenter
-                      ? "w-[60vw] h-[40vw] sm:w-[25vw] sm:h-[17vw]"
+                      ? "w-[25vw] h-[17vw]"
                       : "h-[25vh] w-[25vw]"
                   }`}
                   style={isCenter ? { borderRadius: centerRadius } : undefined}
@@ -125,11 +177,7 @@ export function ZoomParallaxAbout() {
                     alt={alt}
                     fill
                     className="object-cover"
-                    sizes={
-                      isCenter
-                        ? "(max-width: 768px) 80vw, 25vw"
-                        : "(max-width: 768px) 50vw, 30vw"
-                    }
+                    sizes={isCenter ? "25vw" : "30vw"}
                     loading="eager"
                   />
                 </motion.div>
@@ -142,7 +190,7 @@ export function ZoomParallaxAbout() {
             style={{ opacity: labelOpacity }}
             className="absolute top-16 left-0 right-0 z-30 text-center"
           >
-            <p className="text-[var(--color-text-secondary)] text-2xl sm:text-3xl font-semibold uppercase tracking-widest">
+            <p className="text-[var(--color-text-secondary)] text-3xl font-semibold uppercase tracking-widest">
               {language === "en" ? "Our Story" : "Tarinamme"}
             </p>
           </motion.div>
@@ -150,25 +198,23 @@ export function ZoomParallaxAbout() {
           {/* About content — emerges below the center image */}
           <motion.div
             style={{ opacity: aboutOpacity, y: aboutY }}
-            className="absolute inset-x-0 bottom-0 flex flex-col items-center pointer-events-none pb-8 sm:pb-12"
+            className="absolute inset-x-0 bottom-0 flex flex-col items-center pointer-events-none pb-4"
           >
-            {/* Heading + body — no "About" label, leads with heading */}
-            <div className="pointer-events-auto rounded-xl bg-black/70 backdrop-blur-md border border-white/10 px-5 py-4 sm:px-8 sm:py-6 max-w-2xl mx-6 text-center mb-2 sm:mb-4">
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight gradient-text leading-tight">
+            <div className="pointer-events-auto rounded-xl bg-black/70 backdrop-blur-md border border-white/10 px-8 py-6 max-w-2xl mx-6 text-center">
+              <h2 className="text-2xl lg:text-3xl font-bold tracking-tight gradient-text leading-tight">
                 {t.heading}
               </h2>
-              <p className="mt-3 text-sm text-[var(--color-text-secondary)] leading-relaxed hidden sm:block">
+              <p className="mt-3 text-sm text-[var(--color-text-secondary)] leading-relaxed">
                 {t.body.split("\n\n")[0]}
               </p>
             </div>
-
           </motion.div>
         </div>
       </div>
 
-      {/* Team grid — separate section below the parallax */}
+      {/* Team grid — 2x2 on desktop */}
       <div className="max-w-5xl mx-auto px-6 py-20 lg:py-28">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+        <div className="grid grid-cols-2 gap-x-12 gap-y-10">
           {t.team.map((member) => (
             <div key={member.name} className="border-t border-white/10 pt-6">
               <h3 className="text-lg font-semibold text-white">
