@@ -27,7 +27,7 @@ export function StaircasePulse({ className = "" }: { className?: string }) {
         className="w-full h-full"
         preserveAspectRatio="xMidYMid meet"
       >
-        <path d={d} fill="rgba(255, 255, 255, 0.25)" />
+        <path d={d} fill="rgba(255, 255, 255, 0.5)" />
       </svg>
     </div>
   );
