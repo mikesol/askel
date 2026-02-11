@@ -12,13 +12,13 @@ interface ParallaxImage {
 }
 
 const images: ParallaxImage[] = [
-  { src: "/team/askel-team.jpeg", alt: "Askel team" },
-  { src: "/melers/storefront.jpg", alt: "Melers storefront" },
-  { src: "/melers/washroom.jpg", alt: "Washroom operations" },
-  { src: "/melers/team-3.jpeg", alt: "Melers team" },
-  { src: "/melers/red-dryer.jpg", alt: "Industrial dryer" },
-  { src: "/melers/warehouse-1.jpg", alt: "Warehouse" },
-  { src: "/melers/garments.jpg", alt: "Garments" },
+  { src: "/team/askel-team.webp", alt: "Askel team" },
+  { src: "/melers/storefront.webp", alt: "Melers storefront" },
+  { src: "/melers/washroom.webp", alt: "Washroom operations" },
+  { src: "/melers/team-3.webp", alt: "Melers team" },
+  { src: "/melers/red-dryer.webp", alt: "Industrial dryer" },
+  { src: "/melers/warehouse-1.webp", alt: "Warehouse" },
+  { src: "/melers/garments.webp", alt: "Garments" },
 ];
 
 export function ZoomParallaxAbout() {
@@ -99,7 +99,7 @@ export function ZoomParallaxAbout() {
                         ? "(max-width: 768px) 80vw, 25vw"
                         : "(max-width: 768px) 50vw, 30vw"
                     }
-                    unoptimized
+                    loading="eager"
                   />
                 </motion.div>
               </motion.div>
