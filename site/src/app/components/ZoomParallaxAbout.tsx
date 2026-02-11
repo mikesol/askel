@@ -5,6 +5,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "./LanguageProvider";
 import { content } from "../content";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 interface ParallaxImage {
   src: string;
@@ -21,10 +22,34 @@ const images: ParallaxImage[] = [
   { src: "/zoom-parallax/IMG_4801.webp", alt: "Epicenter event space" },
 ];
 
+// Desktop: all 7 images, positions tuned for ~1615×844 viewport
+const desktopPositions = [
+  "", // center
+  "[&>div]:!-top-[30vh] [&>div]:!left-[3vw] [&>div]:!h-[22vh] [&>div]:!w-[30vw]",
+  "[&>div]:!-top-[14vh] [&>div]:!-left-[23vw] [&>div]:!h-[34vh] [&>div]:!w-[15vw]",
+  "[&>div]:!-top-[3vh] [&>div]:!left-[26vw] [&>div]:!h-[22vh] [&>div]:!w-[20vw]",
+  "[&>div]:!top-[28vh] [&>div]:!-left-[24vw] [&>div]:!h-[20vh] [&>div]:!w-[22vw]",
+  "[&>div]:!top-[29vh] [&>div]:!-left-[1vw] [&>div]:!h-[18vh] [&>div]:!w-[20vw]",
+  "[&>div]:!top-[28vh] [&>div]:!left-[20vw] [&>div]:!h-[19vh] [&>div]:!w-[15vw]",
+];
+
+// Mobile: 4 surrounding images in quadrants, tuned for ~390×844 viewport
+const mobilePositions = [
+  "", // center
+  "[&>div]:!-top-[24vh] [&>div]:!-left-[8vw] [&>div]:!h-[18vh] [&>div]:!w-[36vw]",
+  "[&>div]:!-top-[22vh] [&>div]:!left-[24vw] [&>div]:!h-[22vh] [&>div]:!w-[22vw]",
+  "[&>div]:!top-[20vh] [&>div]:!-left-[12vw] [&>div]:!h-[16vh] [&>div]:!w-[34vw]",
+  "[&>div]:!top-[22vh] [&>div]:!left-[20vw] [&>div]:!h-[18vh] [&>div]:!w-[26vw]",
+];
+
+// Which images to show on mobile (center + 4 surrounding, skip far-offscreen ones)
+const mobileImageIndices = [0, 1, 3, 5, 6];
+
 export function ZoomParallaxAbout() {
   const { language } = useLanguage();
   const t = content[language].about;
   const container = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   const { scrollYProgress } = useScroll({
     target: container,
@@ -57,30 +82,25 @@ export function ZoomParallaxAbout() {
   // Center image border radius animates
   const centerRadius = useTransform(scrollYProgress, [0, 0.6], [0, 16]);
 
-  const scales = [scaleCenter, scale5, scale6, scale5, scale6, scale8, scale9];
+  // Desktop: 7 images with full scale range
+  const desktopScales = [scaleCenter, scale5, scale6, scale5, scale6, scale8, scale9];
 
-  // Positions for surrounding images (index 1-6)
-  // Layout: flex center at (808, 498) on 1615×844 viewport.
-  // Formula: top = 498 - h/2 + offset, left = 808 - w/2 + offset.
-  // Inspired by reference: tall portrait left, wide landscape top, staggered bottom.
-  // All bounding boxes verified — no overlaps, 15-60px gaps.
-  const positions = [
-    "", // 0: center (361-637 × 606-1010)
-    "[&>div]:!-top-[30vh] [&>div]:!left-[3vw] [&>div]:!h-[22vh] [&>div]:!w-[30vw]",
-    "[&>div]:!-top-[14vh] [&>div]:!-left-[23vw] [&>div]:!h-[34vh] [&>div]:!w-[15vw]",
-    "[&>div]:!-top-[3vh] [&>div]:!left-[26vw] [&>div]:!h-[22vh] [&>div]:!w-[20vw]",
-    "[&>div]:!top-[28vh] [&>div]:!-left-[24vw] [&>div]:!h-[20vh] [&>div]:!w-[22vw]",
-    "[&>div]:!top-[29vh] [&>div]:!-left-[1vw] [&>div]:!h-[18vh] [&>div]:!w-[20vw]",
-    "[&>div]:!top-[28vh] [&>div]:!left-[20vw] [&>div]:!h-[19vh] [&>div]:!w-[15vw]",
-  ];
+  // Mobile: 5 images with tighter scales
+  const mobileScales = [scaleCenter, scale5, scale5, scale6, scale6];
+
+  const visibleImages = isMobile
+    ? mobileImageIndices.map((i) => images[i])
+    : images;
+  const activePositions = isMobile ? mobilePositions : desktopPositions;
+  const activeScales = isMobile ? mobileScales : desktopScales;
 
   return (
     <section id="about">
       <div ref={container} className="relative h-[300vh]">
         <div className="sticky top-0 h-screen overflow-hidden">
           {/* Parallax images */}
-          {images.map(({ src, alt }, index) => {
-            const scale = scales[index % scales.length];
+          {visibleImages.map(({ src, alt }, index) => {
+            const scale = activeScales[index];
             const isCenter = index === 0;
 
             return (
@@ -90,7 +110,7 @@ export function ZoomParallaxAbout() {
                   scale,
                   opacity: isCenter ? 1 : surroundingOpacity,
                 }}
-                className={`absolute top-0 flex h-full w-full items-center justify-center pt-[18vh] ${positions[index]}`}
+                className={`absolute top-0 flex h-full w-full items-center justify-center pt-[18vh] ${activePositions[index]}`}
               >
                 <motion.div
                   className={`relative overflow-hidden rounded-xl ${
@@ -133,17 +153,17 @@ export function ZoomParallaxAbout() {
             className="absolute inset-x-0 bottom-0 flex flex-col items-center pointer-events-none pb-8 sm:pb-12"
           >
             {/* Heading + body — no "About" label, leads with heading */}
-            <div className="pointer-events-auto rounded-xl bg-black/70 backdrop-blur-md border border-white/10 px-8 py-6 max-w-2xl mx-6 text-center mb-4">
+            <div className="pointer-events-auto rounded-xl bg-black/70 backdrop-blur-md border border-white/10 px-5 py-4 sm:px-8 sm:py-6 max-w-2xl mx-6 text-center mb-2 sm:mb-4">
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight gradient-text leading-tight">
                 {t.heading}
               </h2>
-              <p className="mt-3 text-sm text-[var(--color-text-secondary)] leading-relaxed">
+              <p className="mt-3 text-sm text-[var(--color-text-secondary)] leading-relaxed hidden sm:block">
                 {t.body}
               </p>
             </div>
 
             {/* Team names row with better descriptions */}
-            <div className="pointer-events-auto flex gap-6 sm:gap-10 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 px-6 py-3">
+            <div className="pointer-events-auto flex gap-3 sm:gap-10 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 px-4 sm:px-6 py-2 sm:py-3">
               {t.team.map((member) => (
                 <div key={member.name} className="text-center">
                   <p className="text-xs sm:text-sm font-medium text-white">
