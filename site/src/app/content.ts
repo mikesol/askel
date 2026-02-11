@@ -143,7 +143,7 @@ export const content = {
       body: "Melers is a family-run dry cleaning and laundry business serving 49 B2B customers across southern Finland — hotels, care homes, and restaurants. Founded over 30 years ago by a husband-and-wife team, the business was acquired by Askel in December 2025 after a 3.5-month process from first identification to close.",
       stats: [
         { value: "30+", label: "Years in operation" },
-        { value: "49", label: "B2B customers" },
+        { value: "~€0.5M", label: "Revenue" },
         { value: "<100", label: "Days to close" },
         { value: "94+", label: "Prospects analyzed" },
       ],
@@ -354,7 +354,7 @@ export const content = {
       body: "Melers on perheyritys, joka tarjoaa kuivapesu- ja pesulapalveluja 49 yritysasiakkaalle eteläisessä Suomessa — hotelleille, hoivakodeille ja ravintoloille. Yli 30 vuotta sitten avioparin perustama yritys siirtyi Askelin omistukseen joulukuussa 2025 noin 3,5 kuukauden prosessin jälkeen.",
       stats: [
         { value: "30+", label: "Vuotta toiminnassa" },
-        { value: "49", label: "Yritysasiakasta" },
+        { value: "~€0.5M", label: "Liikevaihto" },
         { value: "<100", label: "Päivää kauppaan" },
         { value: "94+", label: "Kohdetta analysoitu" },
       ],
