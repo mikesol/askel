@@ -17,7 +17,7 @@ export function AuroraBackground({
     >
       <div className="absolute inset-0 overflow-hidden">
         <div
-          className="pointer-events-none absolute -inset-[10px] opacity-20 will-change-transform"
+          className="pointer-events-none absolute -inset-[10px] opacity-50 will-change-transform"
           style={{
             backgroundImage: [
               "repeating-linear-gradient(100deg, var(--black) 0%, var(--black) 7%, var(--transparent) 10%, var(--transparent) 12%, var(--black) 16%)",

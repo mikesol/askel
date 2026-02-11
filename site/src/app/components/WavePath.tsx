@@ -80,6 +80,7 @@ export function WavePathContact() {
 
   return (
     <section id="contact" className="relative py-24 lg:py-32 overflow-hidden">
+      {/* Background animation commented out
       <div ref={containerRef} className="absolute inset-0 pointer-events-auto">
         <svg
           ref={svgRef}
@@ -112,6 +113,7 @@ export function WavePathContact() {
           ))}
         </svg>
       </div>
+      */}
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
         <p className="text-[var(--color-text-secondary)] text-sm font-medium uppercase tracking-widest mb-4">
