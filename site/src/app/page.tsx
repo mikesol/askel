@@ -7,6 +7,7 @@ import { Footer } from "./components/Footer";
 import { WavePathDivider } from "./components/WavePathDivider";
 import { StaircasePulse } from "./components/StaircasePulse";
 import { WavePathContact } from "./components/WavePath";
+import { ZoomParallaxAbout } from "./components/ZoomParallaxAbout";
 import { content } from "./content";
 import Image from "next/image";
 
@@ -92,37 +93,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Team */}
-        <section id="about" className="relative py-24 lg:py-32">
-          <div className="hr-fade" />
-          <div className="max-w-6xl mx-auto px-6 pt-24 lg:pt-32">
-            <p className="text-[var(--color-text-secondary)] text-sm font-medium uppercase tracking-widest mb-4">
-              {t.about.label}
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight gradient-text leading-tight mb-12">
-              {t.about.heading}
-            </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 lg:gap-12">
-              {t.about.team.map((member) => (
-                <div key={member.name} className="group">
-                  <div className="aspect-square rounded-xl overflow-hidden mb-4 grayscale group-hover:grayscale-0 transition-all duration-500">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      width={256}
-                      height={256}
-                      className="w-full h-full object-cover"
-                      loading="eager"
-                      unoptimized
-                    />
-                  </div>
-                  <p className="text-sm font-medium text-white">{member.name}</p>
-                  <p className="text-xs text-[var(--color-text-tertiary)] mt-0.5">{member.role}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Team — Zoom Parallax About */}
+        <ZoomParallaxAbout />
 
         {/* Contact */}
         <WavePathContact />

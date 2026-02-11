@@ -111,28 +111,28 @@ export const content = {
       body: "We acquire small businesses and unlock value through digitalization that others overlook. Our team combines operational experience from building and scaling companies with deep technical expertise.",
       team: [
         {
-          name: "Vária Wahlroos-Kaitila",
-          role: "CEO",
-          ventures: ["moocy", "apperior"],
-          image: "/team/varia.jpeg",
-        },
-        {
-          name: "Niklas Slotte",
-          role: "Finance",
-          ventures: ["sayduck", "whyprint"],
-          image: "/team/niklas.jpeg",
-        },
-        {
           name: "Mikael Ylinen",
           role: "Operations",
           ventures: ["kaffa", "whyprint"],
           image: "/team/mikke.jpeg",
         },
         {
+          name: "Vária Wahlroos-Kaitila",
+          role: "CEO",
+          ventures: ["moocy", "apperior"],
+          image: "/team/varia.jpeg",
+        },
+        {
           name: "Mike Solomon",
           role: "Technology",
           ventures: ["meeshkan", "purescript", "overemployed"],
           image: "/team/mike.jpeg",
+        },
+        {
+          name: "Niklas Slotte",
+          role: "Finance",
+          ventures: ["sayduck", "whyprint"],
+          image: "/team/niklas.jpeg",
         },
       ],
     },
@@ -322,28 +322,28 @@ export const content = {
       body: "Ostamme pienyrityksiä ja vapautamme arvoa digitalisaatiolla, jonka muut jättävät huomaamatta. Tiimimme yhdistää yritysten rakentamisen ja skaalaamisen operatiivisen kokemuksen syvään tekniseen osaamiseen.",
       team: [
         {
-          name: "Vária Wahlroos-Kaitila",
-          role: "CEO",
-          ventures: ["moocy", "apperior"],
-          image: "/team/varia.jpeg",
-        },
-        {
-          name: "Niklas Slotte",
-          role: "Talous",
-          ventures: ["sayduck", "whyprint"],
-          image: "/team/niklas.jpeg",
-        },
-        {
           name: "Mikael Ylinen",
           role: "Operaatiot",
           ventures: ["kaffa", "whyprint"],
           image: "/team/mikke.jpeg",
         },
         {
+          name: "Vária Wahlroos-Kaitila",
+          role: "CEO",
+          ventures: ["moocy", "apperior"],
+          image: "/team/varia.jpeg",
+        },
+        {
           name: "Mike Solomon",
           role: "Teknologia",
           ventures: ["meeshkan", "purescript", "overemployed"],
           image: "/team/mike.jpeg",
+        },
+        {
+          name: "Niklas Slotte",
+          role: "Talous",
+          ventures: ["sayduck", "whyprint"],
+          image: "/team/niklas.jpeg",
         },
       ],
     },
