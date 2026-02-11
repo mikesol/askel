@@ -125,24 +125,13 @@ export function WavePathContact() {
         <p className="mt-6 text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
           {t.body}
         </p>
-        <div className="mt-10 flex flex-col sm:flex-row items-start gap-6">
+        <div className="mt-10">
           <a
             href={`mailto:${t.email}`}
             className="inline-flex items-center justify-center text-sm font-semibold text-black bg-white hover:bg-white/90 px-6 py-3 rounded-lg transition-all duration-150"
           >
             {t.cta}
           </a>
-          <div className="flex flex-col gap-1">
-            <a
-              href={`mailto:${t.email}`}
-              className="text-sm text-[var(--color-text-secondary)] hover:text-white transition-colors"
-            >
-              {t.email}
-            </a>
-            <p className="text-sm text-[var(--color-text-tertiary)]">
-              {t.location}
-            </p>
-          </div>
         </div>
       </div>
     </section>

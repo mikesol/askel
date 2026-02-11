@@ -50,9 +50,9 @@ export function ZoomParallaxAbout() {
   // "Our story" label fades out as parallax begins
   const labelOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
 
-  // About text fades in around the center image
-  const aboutOpacity = useTransform(scrollYProgress, [0.5, 0.8], [0, 1]);
-  const aboutY = useTransform(scrollYProgress, [0.5, 0.8], [40, 0]);
+  // About text fades in below the center image
+  const aboutOpacity = useTransform(scrollYProgress, [0.65, 0.85], [0, 1]);
+  const aboutY = useTransform(scrollYProgress, [0.65, 0.85], [40, 0]);
 
   // Center image border radius animates
   const centerRadius = useTransform(scrollYProgress, [0, 0.6], [0, 16]);
@@ -60,30 +60,24 @@ export function ZoomParallaxAbout() {
   const scales = [scaleCenter, scale5, scale6, scale5, scale6, scale8, scale9];
 
   // Positions for surrounding images (index 1-6)
+  // Layout: flex center at (808, 498) on 1615×844 viewport.
+  // Formula: top = 498 - h/2 + offset, left = 808 - w/2 + offset.
+  // Inspired by reference: tall portrait left, wide landscape top, staggered bottom.
+  // All bounding boxes verified — no overlaps, 15-60px gaps.
   const positions = [
-    "", // index 0: center, default
-    "[&>div]:!-top-[30vh] [&>div]:!left-[5vw] [&>div]:!h-[30vh] [&>div]:!w-[35vw]",
-    "[&>div]:!-top-[10vh] [&>div]:!-left-[25vw] [&>div]:!h-[45vh] [&>div]:!w-[20vw]",
-    "[&>div]:!left-[27.5vw] [&>div]:!h-[25vh] [&>div]:!w-[25vw]",
-    "[&>div]:!top-[27.5vh] [&>div]:!left-[5vw] [&>div]:!h-[25vh] [&>div]:!w-[20vw]",
-    "[&>div]:!top-[27.5vh] [&>div]:!-left-[22.5vw] [&>div]:!h-[25vh] [&>div]:!w-[30vw]",
-    "[&>div]:!top-[22.5vh] [&>div]:!left-[25vw] [&>div]:!h-[15vh] [&>div]:!w-[15vw]",
+    "", // 0: center (361-637 × 606-1010)
+    "[&>div]:!-top-[30vh] [&>div]:!left-[3vw] [&>div]:!h-[22vh] [&>div]:!w-[30vw]",
+    "[&>div]:!-top-[14vh] [&>div]:!-left-[23vw] [&>div]:!h-[34vh] [&>div]:!w-[15vw]",
+    "[&>div]:!-top-[3vh] [&>div]:!left-[26vw] [&>div]:!h-[22vh] [&>div]:!w-[20vw]",
+    "[&>div]:!top-[28vh] [&>div]:!-left-[24vw] [&>div]:!h-[20vh] [&>div]:!w-[22vw]",
+    "[&>div]:!top-[29vh] [&>div]:!-left-[1vw] [&>div]:!h-[18vh] [&>div]:!w-[20vw]",
+    "[&>div]:!top-[28vh] [&>div]:!left-[20vw] [&>div]:!h-[19vh] [&>div]:!w-[15vw]",
   ];
 
   return (
     <section id="about">
       <div ref={container} className="relative h-[300vh]">
         <div className="sticky top-0 h-screen overflow-hidden">
-          {/* "Our story" label at the top */}
-          <motion.div
-            style={{ opacity: labelOpacity }}
-            className="absolute top-8 left-0 right-0 z-10 text-center"
-          >
-            <p className="text-[var(--color-text-secondary)] text-sm font-medium uppercase tracking-widest">
-              {language === "en" ? "Our Story" : "Tarinamme"}
-            </p>
-          </motion.div>
-
           {/* Parallax images */}
           {images.map(({ src, alt }, index) => {
             const scale = scales[index % scales.length];
@@ -96,7 +90,7 @@ export function ZoomParallaxAbout() {
                   scale,
                   opacity: isCenter ? 1 : surroundingOpacity,
                 }}
-                className={`absolute top-0 flex h-full w-full items-center justify-center ${positions[index]}`}
+                className={`absolute top-0 flex h-full w-full items-center justify-center pt-[18vh] ${positions[index]}`}
               >
                 <motion.div
                   className={`relative overflow-hidden rounded-xl ${
@@ -122,6 +116,16 @@ export function ZoomParallaxAbout() {
               </motion.div>
             );
           })}
+
+          {/* "Our story" label — rendered after images so it stacks on top */}
+          <motion.div
+            style={{ opacity: labelOpacity }}
+            className="absolute top-16 left-0 right-0 z-30 text-center"
+          >
+            <p className="text-[var(--color-text-secondary)] text-2xl sm:text-3xl font-semibold uppercase tracking-widest">
+              {language === "en" ? "Our Story" : "Tarinamme"}
+            </p>
+          </motion.div>
 
           {/* About content — emerges below the center image */}
           <motion.div

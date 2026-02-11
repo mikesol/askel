@@ -139,7 +139,7 @@ export const content = {
     caseStudy: {
       label: "Case Study",
       heading: "Melers Oy",
-      subtitle: "Dry cleaning & laundry services — Turku, Finland",
+      subtitle: "Commercial dry cleaning & laundry services — Turku, Finland",
       body: "Melers is a family-run dry cleaning and laundry business serving 49 B2B customers across southern Finland — hotels, care homes, and restaurants. Founded over 30 years ago by a husband-and-wife team, the business was acquired by Askel in December 2025 after a 3.5-month process from first identification to close.",
       stats: [
         { value: "30+", label: "Years in operation" },

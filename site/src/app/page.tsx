@@ -5,7 +5,6 @@ import { Nav } from "./components/Nav";
 import { TypewriterHero } from "./components/TypewriterHero";
 import { Footer } from "./components/Footer";
 import { WavePathDivider } from "./components/WavePathDivider";
-import { StaircasePulse } from "./components/StaircasePulse";
 import { WavePathContact } from "./components/WavePath";
 import { ZoomParallaxAbout } from "./components/ZoomParallaxAbout";
 import { content } from "./content";
@@ -27,9 +26,8 @@ export default function Home() {
         <section id="statement" className="relative py-24 lg:py-32">
           <div className="max-w-6xl mx-auto px-6">
             <WavePathDivider className="mb-16 mx-auto" />
-            <div className="flex gap-12 lg:gap-20 items-start">
-              <StaircasePulse className="hidden md:block w-48 lg:w-64 h-64 lg:h-80 shrink-0" />
-              <div className="flex-1">
+            <div>
+              <div>
                 <p className="text-[var(--color-text-secondary)] text-sm mb-4">
                   {t.statement.label}
                 </p>
@@ -47,7 +45,7 @@ export default function Home() {
         {/* Case Study Teaser */}
         <section className="relative">
           <div className="hr-fade" />
-          <div className="max-w-6xl mx-auto px-6 py-24 lg:py-32">
+          <div className="max-w-6xl mx-auto px-6 pt-24 pb-12 lg:pt-32 lg:pb-16">
             <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
                 <Image
