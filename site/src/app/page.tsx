@@ -113,6 +113,7 @@ export default function Home() {
                       height={256}
                       className="w-full h-full object-cover"
                       loading="eager"
+                      unoptimized
                     />
                   </div>
                   <p className="text-sm font-medium text-white">{member.name}</p>
