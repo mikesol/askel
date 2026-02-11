@@ -139,36 +139,42 @@ export const content = {
     caseStudy: {
       label: "Case Study",
       heading: "Melers Oy",
-      subtitle: "Commercial dry cleaning & laundry services — Turku, Finland",
-      body: "Melers is a family-run dry cleaning and laundry business serving 49 B2B customers across southern Finland — hotels, care homes, and restaurants. Founded over 30 years ago by a husband-and-wife team, the business was acquired by Askel in December 2025 after a 3.5-month process from first identification to close.",
+      subtitle: "Commercial laundry services — Turku, Finland",
+      body: "Melers Oy is a profitable, two-location commercial laundry business operating in Turku since 1967. For more than 30 years under the current ownership, the company has served elderly care homes, hotels, restaurants, and local families with reliable service and stable margins above 20 percent.\n\nLaundry is an essential service. Care homes, hospitality operators, and households require it in any market condition. Melers has stood the test of time by focusing on quality, consistency, and long-term relationships.\n\nThe business was built on trust and operational know-how rather than modern systems. Much of the workflow and reporting remained manual, creating a clear opportunity to introduce structure and digital tools that improve efficiency without changing what customers value.\n\nWe acquired Melers in December 2025 as the first asset in our long-term portfolio strategy.",
       stats: [
-        { value: "30+", label: "Years in operation" },
-        { value: "~€0.5M", label: "Revenue" },
+        { value: "1967", label: "Founded" },
+        { value: "2", label: "Locations" },
+        { value: ">20%", label: "Margins" },
         { value: "<100", label: "Days to close" },
-        { value: "94+", label: "Prospects analyzed" },
       ],
       timeline: [
         {
           title: "Discovery",
-          body: "Identified via our broker network of 100+ contacts across Finland. Matched our criteria: essential service business, loyal B2B customer base, aging founder with no succession plan.",
+          body: "Sourced through our broker network and evaluated against our core criteria.\n\nAn essential service business with recurring B2B demand, strong margins, and a founder approaching retirement without a succession plan.\n\nMost opportunities do not pass. This one did.",
         },
         {
           title: "Due Diligence",
-          body: "Rigorous 50-item framework covering financials, operations, customer contracts, equipment condition, and employee interviews. Multiple site visits to the Turku facility.",
+          body: "We verified that the earnings were real.\n\nCustomer concentration, cost structure, equipment condition, staffing stability, and cash flow durability were reviewed in detail. Multiple site visits and direct discussions with the owners confirmed operational resilience.\n\nWe do not buy revenue. We buy cash flow.",
         },
         {
           title: "Negotiation",
-          body: "Fair valuation based on true business value — not just public records. Respectful terms that honored 30+ years of the founders' work.",
+          body: "Acquired at a sensible multiple relative to earnings.\n\nThe structure aligned incentives through a multi-year earn-out and preserved strong debt coverage from operating cash flow. Terms were designed to protect continuity for customers, staff, and the founding team.",
         },
         {
           title: "Close",
-          body: "Under 100 days from first contact to ownership transfer. Smooth handover with full cooperation from the founding team.",
+          body: "Less than 100 days from first contact to ownership transfer.\n\nA structured handover ensured knowledge transfer, operational stability, and retention of key relationships.",
         },
         {
-          title: "Operations",
-          body: "Digitalization of booking and logistics systems, new management processes, and full team retention. The business keeps its name, identity, and relationships.",
+          title: "Strengthening",
+          body: "Post-acquisition focus has been on introducing structure and modern systems.\n\nFinancial reporting has been standardised. Workflow and routing processes are being optimised. Digital tools are being implemented where they improve efficiency.\n\nThe business retains its name, local identity, and long-standing customer relationships.",
         },
       ],
+      cta: {
+        heading: "Get In Touch",
+        company: "Askel Ventures",
+        body: "We acquire profitable, essential businesses and operate them for the long term.\n\nIf you are a founder exploring succession or an investor aligned with our strategy, we welcome a confidential conversation.",
+        location: "Helsinki, Finland",
+      },
     },
     contact: {
       label: "Contact",
@@ -351,36 +357,42 @@ export const content = {
     caseStudy: {
       label: "Case Study",
       heading: "Melers Oy",
-      subtitle: "Kuivapesu- ja pesulapalvelut — Turku, Suomi",
-      body: "Melers on perheyritys, joka tarjoaa kuivapesu- ja pesulapalveluja 49 yritysasiakkaalle eteläisessä Suomessa — hotelleille, hoivakodeille ja ravintoloille. Yli 30 vuotta sitten avioparin perustama yritys siirtyi Askelin omistukseen joulukuussa 2025 noin 3,5 kuukauden prosessin jälkeen.",
+      subtitle: "Pesulapalvelut — Turku, Suomi",
+      body: "Melers Oy on kannattava, kahden toimipisteen pesulapalveluyritys, joka on toiminut Turussa vuodesta 1967. Yli 30 vuoden ajan nykyisen omistuksen aikana yritys on palvellut vanhustenhoitokoteja, hotelleja, ravintoloita ja paikallisia perheitä luotettavalla palvelulla ja vakailla yli 20 prosentin marginaaleilla.\n\nPesulapalvelu on välttämätön palvelu. Hoitokodit, majoitusalan toimijat ja kotitaloudet tarvitsevat sitä kaikissa markkinaolosuhteissa. Melers on kestänyt ajan testin keskittymällä laatuun, johdonmukaisuuteen ja pitkäaikaisiin suhteisiin.\n\nLiiketoiminta rakennettiin luottamukselle ja operatiiviselle osaamiselle eikä moderneille järjestelmille. Suuri osa työnkulusta ja raportoinnista oli manuaalista, mikä loi selkeän mahdollisuuden tuoda rakenteita ja digitaalisia työkaluja, jotka parantavat tehokkuutta muuttamatta sitä, mitä asiakkaat arvostavat.\n\nOstimme Melersin joulukuussa 2025 ensimmäisenä kohteena pitkäaikaisessa portfoliostrategiassamme.",
       stats: [
-        { value: "30+", label: "Vuotta toiminnassa" },
-        { value: "~€0.5M", label: "Liikevaihto" },
+        { value: "1967", label: "Perustettu" },
+        { value: "2", label: "Toimipistettä" },
+        { value: ">20%", label: "Marginaalit" },
         { value: "<100", label: "Päivää kauppaan" },
-        { value: "94+", label: "Kohdetta analysoitu" },
       ],
       timeline: [
         {
           title: "Löytö",
-          body: "Tunnistettu yli 100 kontaktin meklarverkostomme kautta Suomessa. Täytti kriteerimme: välttämätön palveluyritys, uskollinen B2B-asiakaskunta, ikääntyvä perustaja ilman seuraajasuunnitelmaa.",
+          body: "Löydetty meklarverkostomme kautta ja arvioitu ydinkriteerejämme vasten.\n\nVälttämätön palveluyritys, jolla on toistuva B2B-kysyntä, vahvat marginaalit ja eläkeikää lähestyvä perustaja ilman seuraajasuunnitelmaa.\n\nSuurin osa mahdollisuuksista ei läpäise seulaa. Tämä läpäisi.",
         },
         {
           title: "Due Diligence",
-          body: "Tiukka 50-kohdan kehys, joka kattaa talouden, operaatiot, asiakassopimukset, laitteiden kunnon ja henkilöstöhaastattelut. Useita vierailuja Turun toimitiloihin.",
+          body: "Varmistimme, että tuotot olivat todellisia.\n\nAsiakaskeskittymä, kustannusrakenne, laitteiden kunto, henkilöstön vakaus ja kassavirran kestävyys tarkastettiin yksityiskohtaisesti. Useat vierailut ja suorat keskustelut omistajien kanssa vahvistivat operatiivisen resilienssin.\n\nEmme osta liikevaihtoa. Ostamme kassavirtaa.",
         },
         {
           title: "Neuvottelu",
-          body: "Reilu arvostus todellisen liiketoiminta-arvon perusteella — ei pelkästään julkisten tietojen pohjalta. Kunnioittavat ehdot, jotka kunnioittivat perustajien yli 30 vuoden työtä.",
+          body: "Hankittu järkevällä kertoimella suhteessa tuottoihin.\n\nRakenne linjasi kannustimet monivuotisen earn-outin kautta ja säilytti vahvan velanhoitokyvyn operatiivisesta kassavirrasta. Ehdot suunniteltiin suojaamaan jatkuvuutta asiakkaille, henkilöstölle ja perustajatiimille.",
         },
         {
           title: "Kauppa",
-          body: "Alle 100 päivää ensikontaktista omistuksen siirtoon. Sujuva luovutus perustajapariskunnan täydellä yhteistyöllä.",
+          body: "Alle 100 päivää ensikontaktista omistuksen siirtoon.\n\nRakenteellinen luovutus varmisti tiedonsiirron, operatiivisen vakauden ja avainsuhteiden säilymisen.",
         },
         {
-          title: "Operaatiot",
-          body: "Varaus- ja logistiikkajärjestelmien digitalisointi, uudet johtamisprosessit ja koko tiimin säilyttäminen. Yritys pitää nimensä, identiteettinsä ja suhteensa.",
+          title: "Vahvistaminen",
+          body: "Hankinnan jälkeinen painopiste on ollut rakenteiden ja modernien järjestelmien käyttöönotossa.\n\nTalousraportointi on standardisoitu. Työnkulku- ja reititysprosesseja optimoidaan. Digitaalisia työkaluja otetaan käyttöön siellä, missä ne parantavat tehokkuutta.\n\nYritys säilyttää nimensä, paikallisen identiteettinsä ja pitkäaikaiset asiakassuhteensa.",
         },
       ],
+      cta: {
+        heading: "Ota yhteyttä",
+        company: "Askel Ventures",
+        body: "Ostamme kannattavia, välttämättömiä yrityksiä ja operoimme niitä pitkäjänteisesti.\n\nJos olet perustaja, joka pohtii sukupolvenvaihdosta, tai sijoittaja, joka jakaa strategiamme, toivotamme sinut tervetulleeksi luottamukselliseen keskusteluun.",
+        location: "Helsinki, Suomi",
+      },
     },
     contact: {
       label: "Yhteystiedot",

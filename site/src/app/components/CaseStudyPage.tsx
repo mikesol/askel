@@ -38,9 +38,11 @@ export function CaseStudyPage() {
             <p className="mt-2 text-[var(--color-text-secondary)]">
               {t.subtitle}
             </p>
-            <p className="mt-6 text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
-              {t.body}
-            </p>
+            {t.body.split("\n\n").map((paragraph, i) => (
+              <p key={i} className="mt-6 text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
+                {paragraph}
+              </p>
+            ))}
           </motion.div>
 
           {/* Photos */}
@@ -143,7 +145,7 @@ export function CaseStudyPage() {
 
           {/* CTA */}
           <motion.div
-            className="mt-20"
+            className="mt-20 border-t border-white/10 pt-12"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
@@ -152,8 +154,19 @@ export function CaseStudyPage() {
               href="/#contact"
               className="inline-flex items-center justify-center text-sm font-semibold text-black bg-white hover:bg-white/90 px-6 py-3 rounded-lg transition-all duration-150"
             >
-              {content[language].hero.cta1}
+              {t.cta.heading}
             </a>
+            <div className="mt-8">
+              <p className="text-lg font-semibold text-white">{t.cta.company}</p>
+              {t.cta.body.split("\n\n").map((paragraph, i) => (
+                <p key={i} className="mt-3 text-sm text-[var(--color-text-secondary)] leading-relaxed max-w-lg">
+                  {paragraph}
+                </p>
+              ))}
+              <p className="mt-4 text-xs text-[var(--color-text-tertiary)]">
+                {t.cta.location}
+              </p>
+            </div>
           </motion.div>
         </div>
       </main>
@@ -211,9 +224,11 @@ function TimelineEntry({
         {String(index + 1).padStart(2, "0")}
       </p>
       <h3 className="text-xl font-bold text-white">{title}</h3>
-      <p className="mt-2 text-sm text-[var(--color-text-secondary)] leading-relaxed max-w-lg">
-        {body}
-      </p>
+      {body.split("\n\n").map((paragraph, i) => (
+        <p key={i} className="mt-2 text-sm text-[var(--color-text-secondary)] leading-relaxed max-w-lg">
+          {paragraph}
+        </p>
+      ))}
     </motion.div>
   );
 }
