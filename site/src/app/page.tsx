@@ -50,7 +50,7 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
                 <Image
-                  src="/melers/laundromat.webp"
+                  src="/melers/laundromat2.webp"
                   alt="Melers Oy"
                   fill
                   className="object-cover"
