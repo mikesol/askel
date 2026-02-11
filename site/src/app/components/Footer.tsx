@@ -50,11 +50,12 @@ export function Footer() {
 
         <div className="hr-fade mt-12 mb-6" />
 
+        <div className="flex items-baseline justify-between gap-4">
         <p className="text-xs text-[var(--color-text-tertiary)]">
           &copy; {new Date().getFullYear()} {t.copyright}
         </p>
 
-        <p className="text-center text-xs text-[var(--color-text-tertiary)] mt-10 select-none">
+        <p className="text-xs text-[var(--color-text-tertiary)] select-none">
           Almost like a Hedgefund, but maybe closer to a Hedgehog{" "}
           <span
             role="button"
@@ -70,6 +71,7 @@ export function Footer() {
           </span>{" "}
           this is Steve. We love him.
         </p>
+        </div>
       </div>
 
       <style jsx>{`
