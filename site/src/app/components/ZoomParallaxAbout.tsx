@@ -99,7 +99,11 @@ export function ZoomParallaxAbout() {
                 className={`absolute top-0 flex h-full w-full items-center justify-center ${positions[index]}`}
               >
                 <motion.div
-                  className="relative h-[25vh] w-[25vw] overflow-hidden rounded-xl"
+                  className={`relative overflow-hidden rounded-xl ${
+                    isCenter
+                      ? "w-[60vw] h-[40vw] sm:w-[25vw] sm:h-[17vw]"
+                      : "h-[25vh] w-[25vw]"
+                  }`}
                   style={isCenter ? { borderRadius: centerRadius } : undefined}
                 >
                   <Image
