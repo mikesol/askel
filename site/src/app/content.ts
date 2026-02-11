@@ -22,7 +22,7 @@ export const content = {
     statement: {
       label: "Our Thesis",
       heading: "Good opportunities are often overlooked",
-      body: "Across the Nordics, many essential small businesses are run by founders nearing retirement. They are profitable, resilient, and deeply rooted in their markets, yet often lack modern infrastructure and a clear succession plan.\n\nWe acquire these companies as long-term owners. We strengthen operations, introduce better systems, and build durable structures around stable cash flow.\n\nIn some cases, real operational insight allows us to develop modern technology that extends beyond a single company. Reliable earnings provide the foundation. Scalable technology creates asymmetric upside.\n\nThe result is a portfolio designed to compound over time, generating predictable dividends alongside selective opportunities for substantial value creation.",
+      body: "Across the Nordics, many essential small businesses are profitable and resilient but nearing founder retirement, often without modern systems or succession plans.\n\nWe acquire these companies as long-term owners, strengthen operations, and build durable structures around stable cash flow.\n\nReliable earnings form the base. Selectively, we layer in scalable technology to create asymmetric upside.\n\nThe result: a compounding portfolio designed to generate predictable dividends and meaningful long-term value.",
     },
     investors: {
       label: "For Investors",
@@ -240,7 +240,7 @@ export const content = {
     statement: {
       label: "Teesimme",
       heading: "Hyvät mahdollisuudet jäävät usein huomaamatta",
-      body: "Pohjoismaissa monia välttämättömiä pienyrityksiä johtavat perustajat, jotka lähestyvät eläkeikää. Ne ovat kannattavia, kestäviä ja syvästi juurtuneita markkinoihinsa, mutta niiltä puuttuu usein moderni infrastruktuuri ja selkeä seuraajasuunnitelma.\n\nOstamme näitä yrityksiä pitkäaikaisina omistajina. Vahvistamme toimintaa, tuomme parempia järjestelmiä ja rakennamme kestäviä rakenteita vakaan kassavirran ympärille.\n\nJoissakin tapauksissa todellinen operatiivinen ymmärrys mahdollistaa modernin teknologian kehittämisen, joka ulottuu yksittäisen yrityksen ulkopuolelle. Luotettava tuotto luo perustan. Skaalautuva teknologia luo epäsymmetristä nousupotentiaalia.\n\nTuloksena on portfolio, joka on suunniteltu kasvamaan ajan myötä, tuottaen ennakoitavia osinkoja sekä valikoituja mahdollisuuksia merkittävään arvonluontiin.",
+      body: "Pohjoismaissa monet välttämättömät pienyritykset ovat kannattavia ja kestäviä, mutta perustajan eläköityminen lähestyy — usein ilman moderneja järjestelmiä tai seuraajasuunnitelmaa.\n\nOstamme näitä yrityksiä pitkäaikaisina omistajina, vahvistamme toimintaa ja rakennamme kestäviä rakenteita vakaan kassavirran ympärille.\n\nLuotettava tuotto muodostaa perustan. Valikoivasti kerrostamme skaalautuvaa teknologiaa epäsymmetrisen nousupotentiaalin luomiseksi.\n\nTulos: kasvava portfolio, joka on suunniteltu tuottamaan ennakoitavia osinkoja ja merkittävää pitkäaikaista arvoa.",
     },
     investors: {
       label: "Sijoittajille",

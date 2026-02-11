@@ -54,24 +54,6 @@ export function CaseStudyPage() {
           >
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
               <Image
-                src="/zoom-parallax/IMG_4841.webp"
-                alt="Team at Melers facility"
-                fill
-                className="object-cover"
-                sizes="50vw"
-              />
-            </div>
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
-              <Image
-                src="/zoom-parallax/IMG_5394.webp"
-                alt="Girbau industrial washer"
-                fill
-                className="object-cover"
-                sizes="50vw"
-              />
-            </div>
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
-              <Image
                 src="/zoom-parallax/IMG_5562.webp"
                 alt="Girbau washing machines"
                 fill
