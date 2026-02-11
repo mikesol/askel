@@ -106,41 +106,36 @@ export function ZoomParallaxAbout() {
             );
           })}
 
-          {/* About content — emerges around the center image */}
+          {/* About content — emerges below the center image */}
           <motion.div
             style={{ opacity: aboutOpacity, y: aboutY }}
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            className="absolute inset-x-0 bottom-0 flex flex-col items-center pointer-events-none pb-8 sm:pb-12"
           >
-            <div className="w-full max-w-6xl mx-auto px-6 grid md:grid-cols-[1fr_25vw_1fr] items-center gap-8">
-              {/* Left column: heading + body */}
-              <div className="pointer-events-auto">
-                <p className="text-[var(--color-accent)] text-sm font-medium uppercase tracking-widest mb-4">
-                  {t.label}
-                </p>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight gradient-text leading-tight">
-                  {t.heading}
-                </h2>
-                <p className="mt-4 text-sm text-[var(--color-text-secondary)] leading-relaxed">
-                  {t.body}
-                </p>
-              </div>
+            {/* Heading + body */}
+            <div className="pointer-events-auto rounded-xl bg-black/70 backdrop-blur-md border border-white/10 px-8 py-6 max-w-2xl mx-6 text-center mb-4">
+              <p className="text-[var(--color-accent)] text-xs font-medium uppercase tracking-widest mb-3">
+                {t.label}
+              </p>
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight gradient-text leading-tight">
+                {t.heading}
+              </h2>
+              <p className="mt-3 text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                {t.body}
+              </p>
+            </div>
 
-              {/* Center gap — image shows through */}
-              <div />
-
-              {/* Right column: names + roles */}
-              <div className="pointer-events-auto space-y-3">
-                {t.team.map((member) => (
-                  <div key={member.name}>
-                    <p className="text-sm font-medium text-white">
-                      {member.name}
-                    </p>
-                    <p className="text-xs text-[var(--color-text-tertiary)]">
-                      {member.role}
-                    </p>
-                  </div>
-                ))}
-              </div>
+            {/* Team names row */}
+            <div className="pointer-events-auto flex gap-6 sm:gap-10 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 px-6 py-3">
+              {t.team.map((member) => (
+                <div key={member.name} className="text-center">
+                  <p className="text-xs sm:text-sm font-medium text-white">
+                    {member.name}
+                  </p>
+                  <p className="text-[10px] sm:text-xs text-[var(--color-text-tertiary)]">
+                    {member.role}
+                  </p>
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>
