@@ -159,7 +159,7 @@ function CameraRig() {
 interface TeamMember {
   readonly name: string;
   readonly role: string;
-  readonly ventures: readonly string[];
+  readonly tags: readonly string[];
   readonly image: string;
 }
 

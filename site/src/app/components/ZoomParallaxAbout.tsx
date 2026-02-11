@@ -157,9 +157,11 @@ export function ZoomParallaxAbout() {
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight gradient-text leading-tight">
                 {t.heading}
               </h2>
-              <p className="mt-3 text-sm text-[var(--color-text-secondary)] leading-relaxed hidden sm:block">
-                {t.body}
-              </p>
+              {t.body.split("\n\n").map((paragraph, i) => (
+                <p key={i} className="mt-3 text-sm text-[var(--color-text-secondary)] leading-relaxed hidden sm:block">
+                  {paragraph}
+                </p>
+              ))}
             </div>
 
             {/* Team names row with better descriptions */}
@@ -173,7 +175,7 @@ export function ZoomParallaxAbout() {
                     {member.role}
                   </p>
                   <p className="text-[9px] sm:text-[10px] text-[var(--color-text-tertiary)] opacity-70 mt-0.5">
-                    {member.ventures.join(" · ")}
+                    {member.tags.join(" · ")}
                   </p>
                 </div>
               ))}

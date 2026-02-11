@@ -22,9 +22,11 @@ export function TeamGallery() {
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight gradient-text leading-tight">
           {t.heading}
         </h2>
-        <p className="mt-6 text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
-          {t.body}
-        </p>
+        {t.body.split("\n\n").map((paragraph, i) => (
+          <p key={i} className="mt-6 text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
+            {paragraph}
+          </p>
+        ))}
       </div>
 
       <div className="relative w-full h-[500px] sm:h-[600px] lg:h-[700px]">

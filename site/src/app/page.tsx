@@ -34,9 +34,11 @@ export default function Home() {
                 <h2 className="text-2xl md:text-4xl lg:text-5xl leading-snug text-[var(--color-text-primary)] opacity-80">
                   {t.statement.heading}
                 </h2>
-                <p className="mt-6 text-base text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
-                  {t.statement.body}
-                </p>
+                {t.statement.body.split("\n\n").map((paragraph, i) => (
+                  <p key={i} className="mt-6 text-base text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
+                    {paragraph}
+                  </p>
+                ))}
               </div>
             </div>
           </div>
