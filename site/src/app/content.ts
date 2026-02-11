@@ -21,7 +21,7 @@ export const content = {
     },
     statement: {
       label: "Our Thesis",
-      heading: "The best opportunities are often overlooked.",
+      heading: "Good opportunities are often overlooked",
       body: "Across the Nordics, many essential small businesses are run by founders nearing retirement. They are profitable, resilient, and deeply rooted in their markets, yet often lack modern infrastructure and a clear succession plan.\n\nWe acquire these companies as long-term owners. We strengthen operations, introduce better systems, and build durable structures around stable cash flow.\n\nIn some cases, real operational insight allows us to develop modern technology that extends beyond a single company. Reliable earnings provide the foundation. Scalable technology creates asymmetric upside.\n\nThe result is a portfolio designed to compound over time, generating predictable dividends alongside selective opportunities for substantial value creation.",
     },
     investors: {
@@ -233,7 +233,7 @@ export const content = {
     },
     statement: {
       label: "Teesimme",
-      heading: "Parhaat mahdollisuudet jäävät usein huomaamatta.",
+      heading: "Hyvät mahdollisuudet jäävät usein huomaamatta",
       body: "Pohjoismaissa monia välttämättömiä pienyrityksiä johtavat perustajat, jotka lähestyvät eläkeikää. Ne ovat kannattavia, kestäviä ja syvästi juurtuneita markkinoihinsa, mutta niiltä puuttuu usein moderni infrastruktuuri ja selkeä seuraajasuunnitelma.\n\nOstamme näitä yrityksiä pitkäaikaisina omistajina. Vahvistamme toimintaa, tuomme parempia järjestelmiä ja rakennamme kestäviä rakenteita vakaan kassavirran ympärille.\n\nJoissakin tapauksissa todellinen operatiivinen ymmärrys mahdollistaa modernin teknologian kehittämisen, joka ulottuu yksittäisen yrityksen ulkopuolelle. Luotettava tuotto luo perustan. Skaalautuva teknologia luo epäsymmetristä nousupotentiaalia.\n\nTuloksena on portfolio, joka on suunniteltu kasvamaan ajan myötä, tuottaen ennakoitavia osinkoja sekä valikoituja mahdollisuuksia merkittävään arvonluontiin.",
     },
     investors: {

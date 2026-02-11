@@ -157,30 +157,31 @@ export function ZoomParallaxAbout() {
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight gradient-text leading-tight">
                 {t.heading}
               </h2>
-              {t.body.split("\n\n").map((paragraph, i) => (
-                <p key={i} className="mt-3 text-sm text-[var(--color-text-secondary)] leading-relaxed hidden sm:block">
-                  {paragraph}
-                </p>
-              ))}
+              <p className="mt-3 text-sm text-[var(--color-text-secondary)] leading-relaxed hidden sm:block">
+                {t.body.split("\n\n")[0]}
+              </p>
             </div>
 
-            {/* Team names row with better descriptions */}
-            <div className="pointer-events-auto flex gap-3 sm:gap-10 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 px-4 sm:px-6 py-2 sm:py-3">
-              {t.team.map((member) => (
-                <div key={member.name} className="text-center">
-                  <p className="text-xs sm:text-sm font-medium text-white">
-                    {member.name}
-                  </p>
-                  <p className="text-[10px] sm:text-xs text-[var(--color-text-tertiary)]">
-                    {member.role}
-                  </p>
-                  <p className="text-[9px] sm:text-[10px] text-[var(--color-text-tertiary)] opacity-70 mt-0.5">
-                    {member.tags.join(" · ")}
-                  </p>
-                </div>
-              ))}
-            </div>
           </motion.div>
+        </div>
+      </div>
+
+      {/* Team grid — separate section below the parallax */}
+      <div className="max-w-5xl mx-auto px-6 py-20 lg:py-28">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+          {t.team.map((member) => (
+            <div key={member.name} className="border-t border-white/10 pt-6">
+              <h3 className="text-lg font-semibold text-white">
+                {member.name}
+              </h3>
+              <p className="text-sm text-[var(--color-accent)] mt-1">
+                {member.role}
+              </p>
+              <p className="text-xs text-[var(--color-text-tertiary)] mt-2">
+                {member.tags.join(" · ")}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
