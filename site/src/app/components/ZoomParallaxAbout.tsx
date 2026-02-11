@@ -12,13 +12,13 @@ interface ParallaxImage {
 }
 
 const images: ParallaxImage[] = [
-  { src: "/melers/team-3.jpeg", alt: "Melers team" },
+  { src: "/team/askel-team.jpeg", alt: "Askel team" },
   { src: "/melers/storefront.jpg", alt: "Melers storefront" },
   { src: "/melers/washroom.jpg", alt: "Washroom operations" },
-  { src: "/melers/garments.jpg", alt: "Garments" },
+  { src: "/melers/team-3.jpeg", alt: "Melers team" },
   { src: "/melers/red-dryer.jpg", alt: "Industrial dryer" },
   { src: "/melers/warehouse-1.jpg", alt: "Warehouse" },
-  { src: "/melers/warehouse-2.jpg", alt: "Warehouse operations" },
+  { src: "/melers/garments.jpg", alt: "Garments" },
 ];
 
 export function ZoomParallaxAbout() {
@@ -32,7 +32,6 @@ export function ZoomParallaxAbout() {
   });
 
   // Surrounding images scale up and fade out
-  const scale4 = useTransform(scrollYProgress, [0, 1], [1, 4]);
   const scale5 = useTransform(scrollYProgress, [0, 1], [1, 5]);
   const scale6 = useTransform(scrollYProgress, [0, 1], [1, 6]);
   const scale8 = useTransform(scrollYProgress, [0, 1], [1, 8]);
@@ -48,7 +47,7 @@ export function ZoomParallaxAbout() {
     [0.85, 0.6, 0]
   );
 
-  // About content fades in
+  // About text fades in around the center image
   const aboutOpacity = useTransform(scrollYProgress, [0.5, 0.8], [0, 1]);
   const aboutY = useTransform(scrollYProgress, [0.5, 0.8], [40, 0]);
 
@@ -129,24 +128,14 @@ export function ZoomParallaxAbout() {
               {/* Center gap — image shows through */}
               <div />
 
-              {/* Right column: team members */}
-              <div className="pointer-events-auto grid grid-cols-2 gap-4">
+              {/* Right column: names + roles */}
+              <div className="pointer-events-auto space-y-3">
                 {t.team.map((member) => (
-                  <div key={member.name} className="group">
-                    <div className="aspect-square rounded-lg overflow-hidden mb-2 grayscale group-hover:grayscale-0 transition-all duration-500">
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        width={128}
-                        height={128}
-                        className="w-full h-full object-cover"
-                        unoptimized
-                      />
-                    </div>
-                    <p className="text-xs font-medium text-white">
+                  <div key={member.name}>
+                    <p className="text-sm font-medium text-white">
                       {member.name}
                     </p>
-                    <p className="text-[10px] text-[var(--color-text-tertiary)]">
+                    <p className="text-xs text-[var(--color-text-tertiary)]">
                       {member.role}
                     </p>
                   </div>
