@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Collage Layout Lab</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111; color: #fff; font-family: system-ui, sans-serif; overflow: hidden; }
+
+  #viewport {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #000;
+  }
+
+  /* Rectangles rendered absolutely inside viewport */
+  .rect {
+    position: absolute;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: grab;
+    user-select: none;
+  }
+  .rect:active { cursor: grabbing; }
+  .rect.selected { outline: 2px dashed #fff; outline-offset: 2px; }
+  .rect .label {
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    text-align: center;
+    line-height: 1.3;
+    pointer-events: none;
+  }
+  .rect .dims {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-size: 9px;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  /* Resize handles */
+  .handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border: 1px solid #000;
+    border-radius: 2px;
+    z-index: 10;
+  }
+  .handle.tl { top: -5px; left: -5px; cursor: nw-resize; }
+  .handle.tr { top: -5px; right: -5px; cursor: ne-resize; }
+  .handle.bl { bottom: -5px; left: -5px; cursor: sw-resize; }
+  .handle.br { bottom: -5px; right: -5px; cursor: se-resize; }
+  .handle { display: none; }
+  .rect.selected .handle { display: block; }
+
+  /* Colors */
+  .rect-0 { background: rgba(0,212,170,0.35); border-color: #00d4aa; color: #00d4aa; }
+  .rect-1 { background: rgba(255,107,107,0.35); border-color: #ff6b6b; color: #ff6b6b; }
+  .rect-2 { background: rgba(78,159,255,0.35); border-color: #4e9fff; color: #4e9fff; }
+  .rect-3 { background: rgba(255,193,7,0.35); border-color: #ffc107; color: #ffc107; }
+  .rect-4 { background: rgba(156,39,176,0.35); border-color: #9c27b0; color: #9c27b0; }
+  .rect-5 { background: rgba(255,152,0,0.35); border-color: #ff9800; color: #ff9800; }
+  .rect-6 { background: rgba(0,188,212,0.35); border-color: #00bcd4; color: #00bcd4; }
+
+  /* Crosshair at center */
+  #crosshair-h, #crosshair-v {
+    position: absolute;
+    background: rgba(255,255,255,0.08);
+    pointer-events: none;
+    z-index: 0;
+  }
+  #crosshair-h { left: 0; right: 0; height: 1px; top: 50%; }
+  #crosshair-v { top: 0; bottom: 0; width: 1px; left: 50%; }
+
+  /* HUD */
+  #hud {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 200;
+    background: rgba(0,0,0,0.9);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 11px;
+    line-height: 1.5;
+    max-width: 280px;
+    backdrop-filter: blur(8px);
+    pointer-events: none;
+  }
+  #hud h3 { font-size: 12px; margin-bottom: 4px; color: #00d4aa; }
+  #hud .warn { color: #ff6b6b; font-weight: 600; }
+  #hud .ok { color: #00d4aa; }
+  #hud .metric { color: rgba(255,255,255,0.5); }
+  #hud .sel { color: #fff; }
+
+  /* Controls */
+  #controls {
+    position: fixed;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    z-index: 200;
+    background: rgba(0,0,0,0.9);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 11px;
+    backdrop-filter: blur(8px);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  #controls button {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 11px;
+  }
+  #controls button:hover { background: rgba(255,255,255,0.2); }
+  #controls button.active { background: #00d4aa; color: #000; border-color: #00d4aa; }
+  #output {
+    position: fixed;
+    top: 8px;
+    right: 8px;
+    z-index: 200;
+    background: rgba(0,0,0,0.95);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 10px;
+    font-family: monospace;
+    max-width: 480px;
+    max-height: 60vh;
+    overflow: auto;
+    backdrop-filter: blur(8px);
+    display: none;
+    white-space: pre;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div id="viewport">
+  <div id="crosshair-h"></div>
+  <div id="crosshair-v"></div>
+</div>
+
+<div id="hud">
+  <h3>Collage Layout Lab</h3>
+  <div id="hud-content"></div>
+</div>
+
+<div id="controls">
+  <span style="color:rgba(255,255,255,0.5)">Mode:</span>
+  <button id="btn-mobile" onclick="setPreset('mobile')">420×843</button>
+  <button id="btn-tablet" onclick="setPreset('tablet')">768×1024</button>
+  <button id="btn-desktop" onclick="setPreset('desktop')">1440×900</button>
+  <button id="btn-live" class="active" onclick="setPreset('live')">Live</button>
+  <span style="color:rgba(255,255,255,0.3)">|</span>
+  <button onclick="toggleOutput()">Export CSS</button>
+  <span style="color:rgba(255,255,255,0.3);font-size:10px">Drag to move · Corner handles to resize</span>
+</div>
+
+<div id="output"></div>
+
+<script>
+const NAMES = [
+  "0: Center",
+  "1: Top-R",
+  "2: Top-L",
+  "3: Mid-R",
+  "4: Bot-L",
+  "5: Bot-C",
+  "6: Bot-R",
+];
+
+const layouts = {
+  mobile: [
+    { w: {v:48,u:'vw'}, h: {v:32,u:'vw'}, top: {v:0,u:'vw'}, left: {v:0,u:'vw'} },
+    { w: {v:38,u:'vw'}, h: {v:26,u:'vw'}, top: {v:-14,u:'vh'}, left: {v:18,u:'vw'} },
+    { w: {v:30,u:'vw'}, h: {v:35,u:'vw'}, top: {v:-16,u:'vh'}, left: {v:-18,u:'vw'} },
+    { w: {v:28,u:'vw'}, h: {v:22,u:'vw'}, top: {v:3,u:'vh'}, left: {v:35,u:'vw'} },
+    { w: {v:32,u:'vw'}, h: {v:24,u:'vw'}, top: {v:20,u:'vh'}, left: {v:-18,u:'vw'} },
+    { w: {v:30,u:'vw'}, h: {v:22,u:'vw'}, top: {v:22,u:'vh'}, left: {v:8,u:'vw'} },
+    { w: {v:24,u:'vw'}, h: {v:18,u:'vw'}, top: {v:12,u:'vh'}, left: {v:28,u:'vw'} },
+  ],
+  desktop: [
+    { w: {v:25,u:'vw'}, h: {v:25,u:'vh'}, top: {v:0,u:'vh'}, left: {v:0,u:'vw'} },
+    { w: {v:35,u:'vw'}, h: {v:30,u:'vh'}, top: {v:-30,u:'vh'}, left: {v:5,u:'vw'} },
+    { w: {v:20,u:'vw'}, h: {v:45,u:'vh'}, top: {v:-10,u:'vh'}, left: {v:-25,u:'vw'} },
+    { w: {v:25,u:'vw'}, h: {v:25,u:'vh'}, top: {v:0,u:'vh'}, left: {v:27.5,u:'vw'} },
+    { w: {v:20,u:'vw'}, h: {v:25,u:'vh'}, top: {v:27.5,u:'vh'}, left: {v:5,u:'vw'} },
+    { w: {v:30,u:'vw'}, h: {v:25,u:'vh'}, top: {v:27.5,u:'vh'}, left: {v:-22.5,u:'vw'} },
+    { w: {v:15,u:'vw'}, h: {v:15,u:'vh'}, top: {v:22.5,u:'vh'}, left: {v:25,u:'vw'} },
+  ],
+};
+
+const BP = 768;
+let currentPreset = 'live';
+let rectEls = [];
+let selectedIndex = -1;
+let drag = null; // { type: 'move'|'resize', index, corner?, startMouse, startLayout }
+
+// ============================================================
+// Viewport size helpers
+// ============================================================
+const sizes = { mobile: [420, 843], tablet: [768, 1024], desktop: [1440, 900] };
+
+function getVW() {
+  if (currentPreset === 'live') return window.innerWidth;
+  return sizes[currentPreset][0];
+}
+function getVH() {
+  if (currentPreset === 'live') return window.innerHeight;
+  return sizes[currentPreset][1];
+}
+
+function resolve(dim, vw, vh) {
+  return dim.u === 'vw' ? (dim.v / 100) * vw : (dim.v / 100) * vh;
+}
+function toUnit(px, unit, vw, vh) {
+  // Convert pixel value back to unit value
+  const base = unit === 'vw' ? vw : vh;
+  return Math.round((px / base) * 1000) / 10; // 1 decimal
+}
+
+function getLayout(vw) {
+  return vw < BP ? layouts.mobile : layouts.desktop;
+}
+
+// ============================================================
+// Build DOM
+// ============================================================
+function buildRects() {
+  const viewport = document.getElementById('viewport');
+  rectEls.forEach(el => el.remove());
+  rectEls = [];
+
+  for (let i = 0; i < 7; i++) {
+    const el = document.createElement('div');
+    el.className = `rect rect-${i}`;
+    el.dataset.index = i;
+    el.style.zIndex = i === 0 ? 10 : 5 + i;
+    el.innerHTML = `
+      <div class="label">${NAMES[i]}</div>
+      <div class="dims"></div>
+      <div class="handle tl" data-corner="tl"></div>
+      <div class="handle tr" data-corner="tr"></div>
+      <div class="handle bl" data-corner="bl"></div>
+      <div class="handle br" data-corner="br"></div>
+    `;
+    viewport.appendChild(el);
+    rectEls.push(el);
+  }
+}
+
+// ============================================================
+// Render / Update
+// ============================================================
+function render() {
+  const vw = getVW();
+  const vh = getVH();
+  const layout = getLayout(vw);
+  const vpRect = document.getElementById('viewport').getBoundingClientRect();
+  const rects = [];
+
+  for (let i = 0; i < 7; i++) {
+    const cfg = layout[i];
+    const el = rectEls[i];
+
+    const w = resolve(cfg.w, vw, vh);
+    const h = resolve(cfg.h, vw, vh);
+    const topOff = resolve(cfg.top, vw, vh);
+    const leftOff = resolve(cfg.left, vw, vh);
+
+    // Absolute position within the viewport div
+    const absX = vw / 2 + leftOff - w / 2;
+    const absY = vh / 2 + topOff - h / 2;
+
+    el.style.left = `${absX}px`;
+    el.style.top = `${absY}px`;
+    el.style.width = `${w}px`;
+    el.style.height = `${h}px`;
+
+    el.classList.toggle('selected', i === selectedIndex);
+
+    rects.push({ i, x1: absX, y1: absY, x2: absX + w, y2: absY + h, w: Math.round(w), h: Math.round(h) });
+
+    el.querySelector('.dims').textContent = `${Math.round(w)}×${Math.round(h)}`;
+  }
+
+  // Overlap detection
+  const overlaps = [];
+  for (let a = 0; a < rects.length; a++) {
+    for (let b = a + 1; b < rects.length; b++) {
+      const ra = rects[a], rb = rects[b];
+      const ox = Math.max(0, Math.min(ra.x2, rb.x2) - Math.max(ra.x1, rb.x1));
+      const oy = Math.max(0, Math.min(ra.y2, rb.y2) - Math.max(ra.y1, rb.y1));
+      if (ox > 0 && oy > 0) {
+        overlaps.push({ a, b, area: Math.round(ox * oy), ox: Math.round(ox), oy: Math.round(oy) });
+      }
+    }
+  }
+
+  // Off-screen
+  const offscreen = [];
+  for (const r of rects) {
+    if (r.x1 < 0 || r.y1 < 0 || r.x2 > vw || r.y2 > vh) {
+      const c = { i: r.i, left: Math.max(0,-r.x1), top: Math.max(0,-r.y1), right: Math.max(0,r.x2-vw), bottom: Math.max(0,r.y2-vh) };
+      if (c.left > 2 || c.top > 2 || c.right > 2 || c.bottom > 2) offscreen.push(c);
+    }
+  }
+
+  // HUD
+  const mode = vw < BP ? 'MOBILE' : 'DESKTOP';
+  let html = `<span class="metric">${vw}×${vh} (${mode}) · ${(vh/vw).toFixed(2)}</span><br>`;
+
+  if (overlaps.length === 0) {
+    html += `<span class="ok">No overlaps</span><br>`;
+  } else {
+    html += `<span class="warn">Overlaps (${overlaps.length}):</span><br>`;
+    for (const o of overlaps) {
+      html += `<span class="warn"> ${o.a}↔${o.b}: ${o.ox}×${o.oy} (${o.area}px²)</span><br>`;
+    }
+  }
+
+  if (offscreen.length > 0) {
+    html += `<span class="warn">Off-screen:</span><br>`;
+    for (const o of offscreen) {
+      const parts = [];
+      if (o.left > 0) parts.push(`L:${Math.round(o.left)}`);
+      if (o.top > 0) parts.push(`T:${Math.round(o.top)}`);
+      if (o.right > 0) parts.push(`R:${Math.round(o.right)}`);
+      if (o.bottom > 0) parts.push(`B:${Math.round(o.bottom)}`);
+      html += `<span class="warn"> ${o.i}: ${parts.join(', ')}px</span><br>`;
+    }
+  }
+
+  const totalArea = rects.reduce((s, r) => s + r.w * r.h, 0);
+  html += `<span class="metric">Coverage: ${(totalArea / (vw * vh) * 100).toFixed(1)}%</span><br>`;
+
+  // Selected item info
+  if (selectedIndex >= 0) {
+    const cfg = layout[selectedIndex];
+    html += `<br><span class="sel"><b>${NAMES[selectedIndex]}</b></span><br>`;
+    html += `<span class="sel"> w: ${cfg.w.v}${cfg.w.u} · h: ${cfg.h.v}${cfg.h.u}</span><br>`;
+    html += `<span class="sel"> top: ${cfg.top.v}${cfg.top.u} · left: ${cfg.left.v}${cfg.left.u}</span>`;
+  }
+
+  document.getElementById('hud-content').innerHTML = html;
+}
+
+// ============================================================
+// Interaction: drag to move, corner handles to resize
+// ============================================================
+function getMousePos(e) {
+  const vpRect = document.getElementById('viewport').getBoundingClientRect();
+  return { x: e.clientX - vpRect.left, y: e.clientY - vpRect.top };
+}
+
+document.getElementById('viewport').addEventListener('pointerdown', (e) => {
+  const handle = e.target.closest('.handle');
+  const rect = e.target.closest('.rect');
+
+  if (!rect && !handle) {
+    selectedIndex = -1;
+    render();
+    return;
+  }
+
+  const index = parseInt((handle ? handle.closest('.rect') : rect).dataset.index);
+  selectedIndex = index;
+
+  const vw = getVW();
+  const vh = getVH();
+  const layout = getLayout(vw);
+  const cfg = layout[index];
+
+  // Deep copy the starting layout values
+  const startLayout = {
+    w: { ...cfg.w }, h: { ...cfg.h }, top: { ...cfg.top }, left: { ...cfg.left },
+  };
+
+  const mouse = getMousePos(e);
+
+  if (handle) {
+    drag = {
+      type: 'resize',
+      index,
+      corner: handle.dataset.corner,
+      startMouse: mouse,
+      startLayout,
+      // Store resolved pixel rect for anchor calculation
+      startPx: {
+        w: resolve(cfg.w, vw, vh),
+        h: resolve(cfg.h, vw, vh),
+        top: resolve(cfg.top, vw, vh),
+        left: resolve(cfg.left, vw, vh),
+      },
+    };
+  } else {
+    drag = {
+      type: 'move',
+      index,
+      startMouse: mouse,
+      startLayout,
+    };
+  }
+
+  e.preventDefault();
+  render();
+});
+
+document.addEventListener('pointermove', (e) => {
+  if (!drag) return;
+  e.preventDefault();
+
+  const mouse = getMousePos(e);
+  const dx = mouse.x - drag.startMouse.x;
+  const dy = mouse.y - drag.startMouse.y;
+
+  const vw = getVW();
+  const vh = getVH();
+  const layout = getLayout(vw);
+  const cfg = layout[drag.index];
+  const sl = drag.startLayout;
+
+  if (drag.type === 'move') {
+    // Convert pixel delta to unit values
+    cfg.left.v = sl.left.v + toUnit(dx, cfg.left.u, vw, vh);
+    cfg.top.v = sl.top.v + toUnit(dy, cfg.top.u, vw, vh);
+  } else {
+    // Resize from corner. The opposite corner stays anchored.
+    const sp = drag.startPx;
+    const c = drag.corner;
+
+    // Current rect edges in pixels (relative to viewport center)
+    const oldL = sp.left - sp.w / 2;
+    const oldR = sp.left + sp.w / 2;
+    const oldT = sp.top - sp.h / 2;
+    const oldB = sp.top + sp.h / 2;
+
+    let newL = oldL, newR = oldR, newT = oldT, newB = oldB;
+
+    if (c.includes('l')) newL = oldL + dx; else newR = oldR + dx;
+    if (c.includes('t')) newT = oldT + dy; else newB = oldB + dy;
+
+    // Enforce minimum size
+    const minPx = 20;
+    if (newR - newL < minPx) { if (c.includes('l')) newL = newR - minPx; else newR = newL + minPx; }
+    if (newB - newT < minPx) { if (c.includes('t')) newT = newB - minPx; else newB = newT + minPx; }
+
+    const newW = newR - newL;
+    const newH = newB - newT;
+    const newCenterX = (newL + newR) / 2;
+    const newCenterY = (newT + newB) / 2;
+
+    cfg.w.v = toUnit(newW, cfg.w.u, vw, vh);
+    cfg.h.v = toUnit(newH, cfg.h.u, vw, vh);
+    cfg.left.v = toUnit(newCenterX, cfg.left.u, vw, vh);
+    cfg.top.v = toUnit(newCenterY, cfg.top.u, vw, vh);
+  }
+
+  render();
+});
+
+document.addEventListener('pointerup', () => {
+  drag = null;
+});
+
+// Arrow keys for fine adjustment
+document.addEventListener('keydown', (e) => {
+  if (selectedIndex < 0) return;
+  const vw = getVW();
+  const vh = getVH();
+  const layout = getLayout(vw);
+  const cfg = layout[selectedIndex];
+
+  const step = e.shiftKey ? 0.5 : 1; // half-unit with shift
+
+  if (e.key === 'ArrowLeft') { cfg.left.v -= step; e.preventDefault(); }
+  if (e.key === 'ArrowRight') { cfg.left.v += step; e.preventDefault(); }
+  if (e.key === 'ArrowUp') { cfg.top.v -= step; e.preventDefault(); }
+  if (e.key === 'ArrowDown') { cfg.top.v += step; e.preventDefault(); }
+
+  // Resize with alt+arrow
+  if (e.altKey) {
+    if (e.key === 'ArrowLeft') { cfg.w.v -= step; e.preventDefault(); }
+    if (e.key === 'ArrowRight') { cfg.w.v += step; e.preventDefault(); }
+    if (e.key === 'ArrowUp') { cfg.h.v -= step; e.preventDefault(); }
+    if (e.key === 'ArrowDown') { cfg.h.v += step; e.preventDefault(); }
+  }
+
+  render();
+});
+
+// Click on viewport background deselects
+document.getElementById('viewport').addEventListener('click', (e) => {
+  if (!e.target.closest('.rect')) {
+    selectedIndex = -1;
+    render();
+  }
+});
+
+// ============================================================
+// Preset switching
+// ============================================================
+function setPreset(name) {
+  currentPreset = name;
+  document.querySelectorAll('#controls button[id^=btn]').forEach(b => b.classList.remove('active'));
+  document.getElementById(`btn-${name}`).classList.add('active');
+
+  const vp = document.getElementById('viewport');
+  if (name === 'live') {
+    vp.style.width = '100vw';
+    vp.style.height = '100vh';
+    document.body.style.overflow = 'hidden';
+  } else {
+    const [w, h] = sizes[name];
+    vp.style.width = w + 'px';
+    vp.style.height = h + 'px';
+    document.body.style.overflow = 'auto';
+  }
+  render();
+}
+
+// ============================================================
+// Export
+// ============================================================
+function toggleOutput() {
+  const el = document.getElementById('output');
+  if (el.style.display === 'block') { el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  el.textContent = exportCSS();
+}
+
+function fmtVal(v) {
+  // Clean up floating point: round to 1 decimal, drop .0
+  const r = Math.round(v * 10) / 10;
+  return r === Math.floor(r) ? String(Math.floor(r)) : String(r);
+}
+
+function exportCSS() {
+  let out = 'const positions = [\n';
+  for (let i = 0; i < 7; i++) {
+    const m = layouts.mobile[i];
+    const d = layouts.desktop[i];
+
+    let mobile = '';
+    let desktop = '';
+
+    mobile += `[&>div]:!h-[${fmtVal(m.h.v)}${m.h.u}] [&>div]:!w-[${fmtVal(m.w.v)}${m.w.u}]`;
+    if (m.top.v !== 0) {
+      const neg = m.top.v < 0;
+      mobile += ` [&>div]:!${neg ? '-' : ''}top-[${fmtVal(Math.abs(m.top.v))}${m.top.u}]`;
+    }
+    if (m.left.v !== 0) {
+      const neg = m.left.v < 0;
+      mobile += ` [&>div]:!${neg ? '-' : ''}left-[${fmtVal(Math.abs(m.left.v))}${m.left.u}]`;
+    }
+
+    desktop += `md:[&>div]:!h-[${fmtVal(d.h.v)}${d.h.u}] md:[&>div]:!w-[${fmtVal(d.w.v)}${d.w.u}]`;
+    if (d.top.v !== 0) {
+      const neg = d.top.v < 0;
+      desktop += ` md:[&>div]:!${neg ? '-' : ''}top-[${fmtVal(Math.abs(d.top.v))}${d.top.u}]`;
+    }
+    if (d.left.v !== 0) {
+      const neg = d.left.v < 0;
+      desktop += ` md:[&>div]:!${neg ? '-' : ''}left-[${fmtVal(Math.abs(d.left.v))}${d.left.u}]`;
+    }
+
+    out += `  // ${i}: ${NAMES[i]}\n`;
+    out += `  "${mobile} ${desktop}",\n`;
+  }
+  out += '];\n';
+  return out;
+}
+
+// ============================================================
+// Init
+// ============================================================
+buildRects();
+render();
+window.addEventListener('resize', () => { if (currentPreset === 'live') render(); });
+
+// Expose for console
+window.layouts = layouts;
+window.render = render;
+window.exportCSS = exportCSS;
+</script>
+</body>
+</html>
