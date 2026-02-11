@@ -1,7 +1,7 @@
 "use client";
 
 import { useScroll, useTransform, motion } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { useLanguage } from "./LanguageProvider";
 import { content } from "../content";
@@ -19,8 +19,8 @@ const images = [
 // Mobile: hand-tuned in collage-lab.html (vh offsets, vw sizes).
 // Desktop (md+): original reference positions with vh/vw mix.
 const positions = [
-  // 0: center — offset left so right-side images breathe
-  "[&>div]:!h-[28.4vw] [&>div]:!w-[40.9vw] [&>div]:!top-[1.1vw] [&>div]:!-left-[15.7vw] md:[&>div]:!h-[25vh] md:[&>div]:!w-[25vw] md:[&>div]:!top-0 md:[&>div]:!left-0",
+  // 0: center — mobile offset handled by Framer Motion x/y (animates to 0 during scroll)
+  "[&>div]:!h-[28.4vw] [&>div]:!w-[40.9vw] md:[&>div]:!h-[25vh] md:[&>div]:!w-[25vw] md:[&>div]:!top-0 md:[&>div]:!left-0",
   // 1: top-right
   "[&>div]:!-top-[16vh] [&>div]:!left-[17.3vw] [&>div]:!h-[26vw] [&>div]:!w-[38vw] md:[&>div]:!-top-[30vh] md:[&>div]:!left-[5vw] md:[&>div]:!h-[30vh] md:[&>div]:!w-[35vw]",
   // 2: top-left
@@ -44,13 +44,36 @@ export function ZoomParallaxAbout() {
     offset: ["start start", "end end"],
   });
 
+  // On mobile portrait viewports, images are sized in vw which is small relative
+  // to the tall viewport. Double all scales so the center image fills the screen.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   const scale5 = useTransform(scrollYProgress, [0, 1], [1, 5]);
   const scale6 = useTransform(scrollYProgress, [0, 1], [1, 6]);
   const scale8 = useTransform(scrollYProgress, [0, 1], [1, 8]);
   const scale9 = useTransform(scrollYProgress, [0, 1], [1, 9]);
-  const scaleCenter = useTransform(scrollYProgress, [0, 1], [1, 2.5]);
+  const scaleCenter = useTransform(scrollYProgress, [0, 1], [1, 2.2]);
 
   const scales = [scaleCenter, scale5, scale6, scale5, scale6, scale8, scale9];
+
+  // Center image: animate collage offset → 0 during scroll (mobile only).
+  // Using Framer Motion x/y (translate) so the offset isn't magnified by scale.
+  const centerX = useTransform(scrollYProgress, (p) => {
+    if (!isMobile) return 0;
+    const vw = window.innerWidth / 100;
+    return -15.7 * vw * Math.max(0, 1 - p / 0.4);
+  });
+  const centerY = useTransform(scrollYProgress, (p) => {
+    if (!isMobile) return 0;
+    const vw = window.innerWidth / 100;
+    return 1.1 * vw * Math.max(0, 1 - p / 0.4);
+  });
 
   const surroundingOpacity = useTransform(
     scrollYProgress,
@@ -77,8 +100,9 @@ export function ZoomParallaxAbout() {
                 style={{
                   scale,
                   opacity: isCenter ? 1 : surroundingOpacity,
+                  ...(isCenter ? { x: centerX, y: centerY } : {}),
                 }}
-                className={`absolute top-0 flex h-full w-full items-center justify-center ${positions[index]}`}
+                className={`absolute top-0 flex h-full w-full items-center justify-center md:pt-[20vh] ${positions[index]}`}
               >
                 <motion.div
                   className="relative h-[25vh] w-[25vw] overflow-hidden"
@@ -110,7 +134,7 @@ export function ZoomParallaxAbout() {
           {/* About content */}
           <motion.div
             style={{ opacity: aboutOpacity, y: aboutY }}
-            className="absolute inset-x-0 bottom-0 flex flex-col items-center pointer-events-none pb-4"
+            className="absolute inset-x-0 bottom-0 flex flex-col items-center pointer-events-none pb-[25vh] sm:pb-4"
           >
             <div className="pointer-events-auto rounded-xl bg-black/70 backdrop-blur-md border border-white/10 px-5 py-4 sm:px-8 sm:py-6 max-w-2xl mx-6 text-center">
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight gradient-text leading-tight">
@@ -125,7 +149,7 @@ export function ZoomParallaxAbout() {
       </div>
 
       {/* Team grid */}
-      <div className="max-w-5xl mx-auto px-6 py-12 sm:py-20 lg:py-28">
+      <div className="max-w-5xl mx-auto px-6 -mt-[40vh] pb-12 sm:mt-0 sm:py-20 lg:py-28">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 sm:gap-y-10">
           {t.team.map((member) => (
             <div key={member.name} className="border-t border-white/10 pt-6">
