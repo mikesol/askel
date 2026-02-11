@@ -111,16 +111,16 @@ export const content = {
       body: "Our team combines entrepreneurial experience, operational leadership, and technical depth. Together, we have founded, scaled, and exited multiple companies.\n\nWe approach each acquisition as long-term owners. We strengthen the fundamentals, introduce disciplined processes, and build modern infrastructure where it drives measurable return.\n\nWe invest our own capital alongside our shareholders and are aligned in building enduring value.",
       team: [
         {
+          name: "Mikael Ylinen",
+          role: "Integration & Operational Control",
+          tags: ["Operational Integration", "Infrastructure & Systems", "Risk Management"],
+          image: "/team/mikke.jpeg",
+        },
+        {
           name: "Varia Wahlroos-Kaitila",
           role: "Acquisition & Commercial Value Creation",
           tags: ["M&A Deal Origination", "Post-Acquisition Integration", "Revenue Expansion"],
           image: "/team/varia.jpeg",
-        },
-        {
-          name: "Niklas Slotte",
-          role: "Capital & Portfolio Discipline",
-          tags: ["Capital Allocation", "Financing & Structuring", "Governance", "Post-Acquisition Integration"],
-          image: "/team/niklas.jpeg",
         },
         {
           name: "Mike Solomon",
@@ -129,10 +129,10 @@ export const content = {
           image: "/team/mike.jpeg",
         },
         {
-          name: "Mikael Ylinen",
-          role: "Integration & Operational Control",
-          tags: ["Operational Integration", "Infrastructure & Systems", "Risk Management"],
-          image: "/team/mikke.jpeg",
+          name: "Niklas Slotte",
+          role: "Capital & Portfolio Discipline",
+          tags: ["Capital Allocation", "Financing & Structuring", "Governance", "Post-Acquisition Integration"],
+          image: "/team/niklas.jpeg",
         },
       ],
     },
@@ -329,16 +329,16 @@ export const content = {
       body: "Tiimimme yhdistää yrittäjäkokemuksen, operatiivisen johtajuuden ja teknisen syvyyden. Yhdessä olemme perustaneet, skaalanneet ja myyneet useita yrityksiä.\n\nLähestymme jokaista yritysostoa pitkäaikaisina omistajina. Vahvistamme perustekijät, tuomme kurinalaisia prosesseja ja rakennamme modernia infrastruktuuria sinne, missä se tuottaa mitattavaa tuottoa.\n\nSijoitamme omaa pääomaamme osakkeenomistajiemme rinnalla ja olemme sitoutuneita rakentamaan kestävää arvoa.",
       team: [
         {
+          name: "Mikael Ylinen",
+          role: "Integraatio & operatiivinen hallinta",
+          tags: ["Operatiivinen integraatio", "Infrastruktuuri & järjestelmät", "Riskienhallinta"],
+          image: "/team/mikke.jpeg",
+        },
+        {
           name: "Varia Wahlroos-Kaitila",
           role: "Yritysostot & kaupallinen arvonluonti",
           tags: ["M&A-origination", "Integraatio", "Liikevaihdon kasvu"],
           image: "/team/varia.jpeg",
-        },
-        {
-          name: "Niklas Slotte",
-          role: "Pääoma & portfoliokuri",
-          tags: ["Pääoman allokointi", "Rahoitus & strukturointi", "Hallinto", "Integraatio"],
-          image: "/team/niklas.jpeg",
         },
         {
           name: "Mike Solomon",
@@ -347,10 +347,10 @@ export const content = {
           image: "/team/mike.jpeg",
         },
         {
-          name: "Mikael Ylinen",
-          role: "Integraatio & operatiivinen hallinta",
-          tags: ["Operatiivinen integraatio", "Infrastruktuuri & järjestelmät", "Riskienhallinta"],
-          image: "/team/mikke.jpeg",
+          name: "Niklas Slotte",
+          role: "Pääoma & portfoliokuri",
+          tags: ["Pääoman allokointi", "Rahoitus & strukturointi", "Hallinto", "Integraatio"],
+          image: "/team/niklas.jpeg",
         },
       ],
     },

@@ -149,7 +149,7 @@ export function ZoomParallaxAbout() {
       </div>
 
       {/* Team grid */}
-      <div className="max-w-5xl mx-auto px-6 -mt-[40vh] pb-12 sm:mt-0 sm:py-20 lg:py-28">
+      <div className="max-w-5xl mx-auto px-6 -mt-[20vh] pb-12 sm:mt-0 sm:py-20 lg:py-28">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 sm:gap-y-10">
           {t.team.map((member) => (
             <div key={member.name} className="border-t border-white/10 pt-6">
