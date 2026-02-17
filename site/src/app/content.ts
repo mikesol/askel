@@ -12,7 +12,7 @@ export const content = {
     },
     hero: {
       prefix: "Flipping",
-      words: ["old", "boring", "traditional", "mom-and-pop", "brick-and-mortar"],
+      words: ["old", "boring", "traditional", "brick-and-mortar"],
       suffix: "businesses",
       subtitle:
         "Turning old companies into Growth Ventures",
@@ -230,7 +230,7 @@ export const content = {
     },
     hero: {
       prefix: "Flippaamme",
-      words: ["vanhoja", "tylsiä", "perinteisiä", "perheyrityksiä", "kivijalka"],
+      words: ["vanhoja", "tylsiä", "perinteisiä", "kivijalka"],
       suffix: "yrityksiä",
       subtitle:
         "Ostamme pienyrityksiä ja vapautamme arvoa digitalisaatiolla, jonka muut jättävät huomaamatta.",
